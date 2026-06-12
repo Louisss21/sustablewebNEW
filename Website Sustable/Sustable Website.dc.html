@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="image-slot.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #ffffff; }
+    body { font-family: Montserrat, Helvetica, Arial, sans-serif; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { text-decoration: none; }
+    .maplibregl-popup-content { font-family: Montserrat, sans-serif; border-radius: 14px; padding: 14px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
+    .maplibregl-ctrl-group { border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.10); }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #ffffff;">
+
+  <!-- ============ HEADER ============ -->
+  <header style="position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid #e8e8ed;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 12px 32px; display: flex; align-items: center; gap: 24px;">
+      <a onClick="{{ goHome }}" style="cursor: pointer; display: flex; align-items: center; flex-shrink: 0;">
+        <img src="assets/logo.png" alt="Sustable" style="height: 36px; width: auto; display: block;">
+      </a>
+      <nav style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 32px; font-size: 14.5px; font-weight: 500;">
+        <a onClick="{{ goAbout }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">Über uns</a>
+        <a onClick="{{ goMehr }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">Mehr erfahren</a>
+        <a onClick="{{ goBlog }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">Blog</a>
+        <a onClick="{{ goBusiness }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">Business</a>
+        <a onClick="{{ goHaendler }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">Händlersuche</a>
+        <a onClick="{{ goFaq }}" style="color: #1d1d1f; cursor: pointer;" style-hover="color: #86868b;">FAQ</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+        <a onClick="{{ goCart }}" style="cursor: pointer; display: flex; align-items: center; gap: 9px; background: #f5f5f7; border-radius: 980px; padding: 9px 17px; color: #1d1d1f; font-weight: 600; font-size: 14px;" style-hover="background: #e8e8ed;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.5"></circle><circle cx="17.5" cy="20" r="1.5"></circle><path d="M3 4h2l2.4 11h10.2L20 7H6.6"></path></svg>
+          <span>{{ cartCount }}</span>
+          <span style="color: #86868b; font-weight: 500;">{{ cartTotalFmt }}</span>
+        </a>
+        <a onClick="{{ goShop }}" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #111113; color: #ffffff; border-radius: 980px; padding: 10px 22px; font-weight: 600; font-size: 14.5px;" style-hover="background: #2c2c2e;">
+          Shop
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex: 1;">
+
+  <!-- ===================== HOME ===================== -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Home">
+
+      <!-- Hero -->
+      <section style="position: relative; overflow: hidden; background-image: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 24%), linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.93) 38%, rgba(255,255,255,0.55) 58%, rgba(255,255,255,0.1) 80%, rgba(255,255,255,0) 95%), url('assets/hero-v5.png'); background-size: cover; background-position: right center; min-height: 620px; display: flex; align-items: center;">
+        <div style="max-width: 1280px; width: 100%; margin: 0 auto; padding: 90px 32px 110px;">
+          <h1 style="margin: 0 0 26px; font-size: 56px; line-height: 1.12; font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f; max-width: 720px;">
+            Der Solartisch, der deine <span style="color: #e8821d; font-weight: 700;">Stromabrechnung</span> kürzt.
+          </h1>
+          <p style="margin: 0 0 38px; font-size: 19px; line-height: 1.6; color: #424245; max-width: 500px;">
+            Der Solartisch Sustable ONE verbindet Design mit Nachhaltigkeit. Ein eleganter Gartentisch, der Sonnenenergie in Strom für dein Zuhause verwandelt.
+          </p>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 16px;" style-hover="background: #2c2c2e;">
+              Jetzt entdecken
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+            </a>
+            <a onClick="{{ goRechner }}" style="cursor: pointer; display: inline-flex; align-items: center; background: rgba(255,255,255,0.7); color: #1d1d1f; border: 1.5px solid #86868b; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 16px;" style-hover="border-color: #1d1d1f; background: #ffffff;">Ersparnis berechnen</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ersparnis-Rechner -->
+      <section id="rechner" style="background: #f5f5f7; padding: 100px 32px;">
+        <div style="max-width: 1180px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 54px;">
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Rechner</div>
+            <h2 style="margin: 0; font-size: 42px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Deine mögliche Ersparnis.</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: stretch;">
+            <div style="background: #ffffff; border-radius: 22px; padding: 44px; display: flex; flex-direction: column; gap: 36px;">
+              <div>
+                <label style="display: block; font-weight: 600; font-size: 15px; color: #1d1d1f; margin-bottom: 12px;">Dein Solartisch</label>
+                <div style="display: flex; gap: 8px;">
+                  <sc-for list="{{ calcProducts }}" as="cp" hint-placeholder-count="3">
+                    <a onClick="{{ cp.select }}" style="{{ cp.style }}">
+                      <div style="font-weight: 700; font-size: 15px;">{{ cp.label }}</div>
+                      <div style="{{ cp.subStyle }}">{{ cp.wpText }}</div>
+                    </a>
+                  </sc-for>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
+                  <label style="font-weight: 600; font-size: 15px; color: #1d1d1f;">Dein Strompreis</label>
+                  <span style="font-weight: 700; font-size: 22px; color: #1d1d1f;">{{ strompreis }} ct/kWh</span>
+                </div>
+                <input type="range" min="20" max="60" step="1" value="{{ strompreis }}" onChange="{{ onStrompreis }}" style="width: 100%; accent-color: #111113; cursor: pointer; height: 28px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #86868b; margin-top: 4px;"><span>20 ct</span><span>60 ct</span></div>
+              </div>
+              <div>
+                <label style="display: block; font-weight: 600; font-size: 15px; color: #1d1d1f; margin-bottom: 12px;">Dein Standort</label>
+                <select value="{{ region }}" onChange="{{ onRegion }}" style="width: 100%; padding: 14px 16px; font-size: 15px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; background: #ffffff; color: #1d1d1f; cursor: pointer;">
+                  <option value="nord">Norddeutschland · ca. 950 kWh/kWp im Jahr</option>
+                  <option value="mitte">Mitteldeutschland · ca. 1.020 kWh/kWp im Jahr</option>
+                  <option value="sued">Süddeutschland · ca. 1.100 kWh/kWp im Jahr</option>
+                </select>
+              </div>
+              <p style="margin: 0; font-size: 12.5px; line-height: 1.6; color: #86868b;">{{ calcNote }}</p>
+            </div>
+            <div style="background: #0a0a0c; border-radius: 22px; padding: 44px; color: #ffffff; display: flex; flex-direction: column; justify-content: center; gap: 30px;">
+              <div>
+                <div style="font-size: 14px; font-weight: 500; color: #86868b; margin-bottom: 8px;">Deine Ersparnis pro Jahr</div>
+                <div style="font-size: 56px; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; line-height: 1;">{{ ersparnisFmt }}</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 28px;">
+                <div>
+                  <div style="font-size: 21px; font-weight: 700;">{{ ertragFmt }}</div>
+                  <div style="font-size: 12.5px; color: #86868b; margin-top: 4px;">Stromertrag pro Jahr</div>
+                </div>
+                <div>
+                  <div style="font-size: 21px; font-weight: 700;">{{ amortFmt }}</div>
+                  <div style="font-size: 12.5px; color: #86868b; margin-top: 4px;">Amortisationszeit</div>
+                </div>
+                <div>
+                  <div style="font-size: 21px; font-weight: 700;">{{ ersparnis25Fmt }}</div>
+                  <div style="font-size: 12.5px; color: #86868b; margin-top: 4px;">Ersparnis in 25 Jahren</div>
+                </div>
+              </div>
+              <a onClick="{{ goShop }}" style="cursor: pointer; align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; background: #ffffff; color: #111113; border-radius: 980px; padding: 12px 26px; font-weight: 600; font-size: 15px;" style-hover="background: #e8e8ed;">
+                Jetzt entdecken
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#111113" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vorteile -->
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 1180px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 60px;">
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Vorteile</div>
+            <h2 style="margin: 0 0 18px; font-size: 42px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Warum ein Sustable Solartisch?</h2>
+            <p style="margin: 0 auto; max-width: 600px; font-size: 17px; line-height: 1.6; color: #6e6e73;">Mehr als nur ein Gartentisch. Eine Investition in Nachhaltigkeit, Design und deine Unabhängigkeit.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M6.34 17.66l-1.41 1.41"></path><path d="M19.07 4.93l-1.41 1.41"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Solarenergie nutzen</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Wandelt Sonnenlicht in sauberen Strom für dein Zuhause um, direkt auf deiner Terrasse.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Kosten sparen</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Senke deine Stromrechnung nachhaltig und mache dich unabhängiger vom Stromnetz.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Nachhaltig leben</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Regional und fair produziert. Ein Beitrag zu einer sauberen Zukunft.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M12 22v-5"></path><path d="M9 8V2"></path><path d="M15 8V2"></path><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Plug &amp; Play</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Ansteckkabel in die Außensteckdose stecken und Strom direkt ins Haus einspeisen.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">10 Jahre Garantie</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Hochwertige Materialien und deutsche Qualität für langfristige Zuverlässigkeit.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"></path><path d="M5 18v2"></path><path d="M19 18v2"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Design &amp; Komfort</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Genieße vollen Gartentisch-Komfort und modernes Design trotz integrierter Solartechnik.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Produkt -->
+      <section style="padding: 100px 32px; background: #f5f5f7;">
+        <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+          <div style="background: #ffffff; border-radius: 22px; padding: 40px; display: flex; align-items: center; justify-content: center;">
+            <img src="https://sustable.eu/wp-content/uploads/2025/10/One_1.avif" alt="Solartisch Sustable ONE+ Edelstahl" style="max-width: 100%; height: auto; display: block;">
+          </div>
+          <div>
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Das Produkt</div>
+            <h2 style="margin: 0 0 20px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Sustable ONE+ Edelstahl.</h2>
+            <p style="margin: 0 0 26px; font-size: 16px; line-height: 1.7; color: #6e6e73;">
+              Eleganter Solartisch aus gebürstetem Edelstahl mit integriertem 465 Wp-Solarmodul und 500 W-Wechselrichter. Mit versenkbaren Rollen mobil auf deiner Terrasse – die Gasdruckdämpfer neigen ihn in den perfekten Winkel von 25°.
+            </p>
+            <div style="font-size: 28px; font-weight: 700; color: #1d1d1f; margin-bottom: 30px;">1.750 €</div>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+              <a onClick="{{ addToCart }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">In den Warenkorb</a>
+              <a onClick="{{ goProdukt }}" style="cursor: pointer; display: inline-flex; align-items: center; background: transparent; color: #1d1d1f; border: 1.5px solid #c7c7cc; border-radius: 980px; padding: 12px 26px; font-weight: 600; font-size: 15px;" style-hover="border-color: #1d1d1f;">Mehr erfahren</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- App -->
+      <section style="padding: 110px 32px; background: #0a0a0c;">
+        <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; align-items: center;">
+          <div>
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">App</div>
+            <h2 style="margin: 0 0 20px; font-size: 42px; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; line-height: 1.15;">Alles auf einen Blick.<br>In der App.</h2>
+            <p style="margin: 0 0 38px; font-size: 16.5px; line-height: 1.7; color: #86868b; max-width: 440px;">
+              Verfolge live, wie viel Strom dein Sustable erzeugt – und wie viel du sparst.
+            </p>
+            <div style="display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.12);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.09 12.69A1 1 0 0 0 5 14h4v8l8.91-10.69A1 1 0 0 0 17 10h-4z"></path></svg>
+                <div>
+                  <div style="font-size: 15px; font-weight: 600; color: #ffffff;">Live-Ertrag</div>
+                  <div style="font-size: 13.5px; color: #86868b;">Aktuelle Leistung in Watt, in Echtzeit</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.12);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M7 14l4-4 3 3 5-6"></path></svg>
+                <div>
+                  <div style="font-size: 15px; font-weight: 600; color: #ffffff;">Tages- und Jahresverlauf</div>
+                  <div style="font-size: 13.5px; color: #86868b;">Erzeugung pro Tag, Monat und Jahr</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 16px; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.12); border-bottom: 1px solid rgba(255,255,255,0.12);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"></path></svg>
+                <div>
+                  <div style="font-size: 15px; font-weight: 600; color: #ffffff;">Ersparnis in Euro</div>
+                  <div style="font-size: 13.5px; color: #86868b;">Dein Beitrag zur Stromrechnung, mitgerechnet</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: center;">
+            <div style="width: 300px; background: #0a0a0c; border-radius: 48px; padding: 11px; box-shadow: 0 40px 90px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,255,255,0.07); position: relative;">
+              <div style="position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 96px; height: 26px; background: #000000; border-radius: 999px; z-index: 2;"></div>
+              <img src="assets/app-screen.png" alt="Sustable App – All-in-one Demo" style="display: block; width: 100%; border-radius: 38px;">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Händler-Teaser -->
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 1180px; margin: 0 auto; text-align: center;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Vor Ort erleben</div>
+          <h2 style="margin: 0 0 18px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Sustable bei einem Händler in deiner Nähe.</h2>
+          <p style="margin: 0 auto 40px; max-width: 540px; font-size: 16.5px; line-height: 1.6; color: #6e6e73;">Erlebe den Sustable ONE+ live – bei unseren Fachhändlern in Koblenz und Memmingen.</p>
+          <div style="display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 26px 34px; text-align: left; min-width: 290px;">
+              <div style="font-weight: 700; font-size: 16px; margin-bottom: 6px;">BÜRO-CREATIV GmbH</div>
+              <div style="font-size: 14.5px; color: #6e6e73; line-height: 1.6;">Schönbornsluster Straße 53<br>56070 Koblenz</div>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 26px 34px; text-align: left; min-width: 290px;">
+              <div style="font-weight: 700; font-size: 16px; margin-bottom: 6px;">Möbel Wassermann</div>
+              <div style="font-size: 14.5px; color: #6e6e73; line-height: 1.6;">Mittereschweg 2<br>87700 Memmingen</div>
+            </div>
+          </div>
+          <a onClick="{{ goHaendler }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">
+            Händler auf der Karte finden
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- Herstellung -->
+      <section style="padding: 100px 32px 120px; background: #f5f5f7;">
+        <div style="max-width: 1180px; margin: 0 auto; text-align: center;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Herstellung</div>
+          <h2 style="margin: 0 0 44px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Regional und fair gefertigt.</h2>
+          <div style="max-width: 800px; margin: 0 auto; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.16); background: #0a0a0c; position: relative; z-index: 5;">
+            <video src="https://sustable.eu/wp-content/uploads/2025/10/Fertigung.mp4" controls preload="metadata" style="width: 100%; display: block;"></video>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </sc-if>
+
+  <!-- ===================== MEHR ERFAHREN ===================== -->
+  <sc-if value="{{ isMehr }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Mehr erfahren" style="background: #ffffff;">
+      <section style="background: #f5f5f7; padding: 90px 32px;">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center;">
+          <div>
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Mehr erfahren</div>
+            <h1 style="margin: 0 0 22px; font-size: 46px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Mehr Informationen zu unseren Solartischen.</h1>
+            <p style="margin: 0 0 32px; font-size: 17px; line-height: 1.7; color: #6e6e73;">
+              Unsere Solartische vereinen modernes Design mit nachhaltiger Energiegewinnung. Sie bieten die volle Funktionalität eines klassischen Gartentisches – mit dem zusätzlichen Vorteil, Sonnenenergie in Strom umzuwandeln.
+            </p>
+            <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">
+              Jetzt entdecken
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+            </a>
+          </div>
+          <div style="border-radius: 22px; overflow: hidden; max-height: 440px;">
+            <img src="https://sustable.eu/wp-content/uploads/2026/01/DSC02954-min-1365x2048.jpg" alt="Sustable Solartisch" style="width: 100%; height: 440px; object-fit: cover; display: block;">
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 90px 32px; max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 90px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div style="border-radius: 22px; overflow: hidden;"><img src="https://sustable.eu/wp-content/uploads/2026/01/DSC02941-min-2048x1365.jpg" alt="Solartisch im Außeneinsatz" style="width: 100%; height: 340px; object-fit: cover; display: block;"></div>
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Wärmeentwicklung und Langlebigkeit.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Auch unsere Solarplatte erwärmt sich durch direkte Sonne. Durch die Stromerzeugung heizt sie sich jedoch weniger auf als Kunststoff- oder Metallplatten. Die Solartische sind für den dauerhaften Außeneinsatz gemacht und halten Regen, Schnee und Hagel stand – ganzjährig und ohne Funktionsverlust.</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Pflegeleicht und unkompliziert.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Die Glasoberfläche kann einfach mit einem feuchten Tuch und mildem Reinigungsmittel gereinigt werden. Kratzer werden durch das gehärtete Glas vermieden.</p>
+          </div>
+          <div style="border-radius: 22px; overflow: hidden;"><img src="https://sustable.eu/wp-content/uploads/2025/11/ChatGPT-Image-26.-Juni-2025-16_46_53-e1762325531499.png" alt="Reinigung des Solarmoduls" style="width: 100%; height: 340px; object-fit: cover; display: block;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div style="border-radius: 22px; overflow: hidden; background: #f5f5f7;"><img src="https://sustable.eu/wp-content/uploads/2025/10/One_7.avif" alt="Technische Eigenschaften" style="width: 100%; height: 340px; object-fit: contain; display: block;"></div>
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Technische Eigenschaften und Stabilität.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Die Solarplatten bestehen aus leistungsstarken Modulen mit einem stabilen Aluminiumrahmen. Die Solarzellen sind dauerhaft mit der Glasplatte verbunden, sodass die Konstruktion widerstandsfähig bleibt. Selbst hohe Schneelasten oder starke Stöße können der Oberfläche kaum etwas anhaben.</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Effizienz und Standortwahl.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Die Stromausbeute hängt – wie bei allen Solarmodulen – von der Sonneneinstrahlung ab. Es empfiehlt sich eine Platzierung an einem möglichst sonnigen Ort. Bereits kleine Schatten, etwa von einem Sonnenschirm-Stiel, können den Wirkungsgrad beeinträchtigen.</p>
+          </div>
+          <div style="border-radius: 22px; overflow: hidden; background: #f5f5f7;"><img src="https://sustable.eu/wp-content/uploads/2025/10/One_6.avif" alt="Standortwahl" style="width: 100%; height: 340px; object-fit: contain; display: block;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div style="border-radius: 22px; overflow: hidden;"><img src="https://sustable.eu/wp-content/uploads/2025/11/ChatGPT-Image-26.-Juni-2025-16_31_20-e1762326075709.png" alt="Einspeisung über die Steckdose" style="width: 100%; height: 340px; object-fit: cover; display: block;"></div>
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Einspeisen über eine Steckdose.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Der erzeugte Solarstrom wird direkt über eine haushaltsübliche Steckdose ins Hausnetz eingespeist. Der Wechselrichter verfügt über einen automatischen Netz- und Anlagenschutz, der die Einspeisung sofort unterbricht, sobald der Stecker gezogen wird.</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+          <div>
+            <h2 style="margin: 0 0 16px; font-size: 27px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f;">Kein Einfluss auf den Nutzungskomfort.</h2>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Die stabile Bauweise ermöglicht eine uneingeschränkte Nutzung im Alltag. Geschirr, Gläser oder andere Gegenstände können bedenkenlos direkt auf der Glasplatte abgestellt werden.</p>
+          </div>
+          <div style="border-radius: 22px; overflow: hidden;"><img src="https://sustable.eu/wp-content/uploads/2025/11/Bildschirmfoto-2025-06-26-um-17.01.18-e1762326152515.png" alt="Geschirr auf dem Solartisch" style="width: 100%; height: 340px; object-fit: cover; display: block;"></div>
+        </div>
+      </section>
+
+      <section style="padding: 0 32px 110px;">
+        <div style="max-width: 1100px; margin: 0 auto; background: #f5f5f7; border-radius: 22px; padding: 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap;">
+          <div>
+            <h2 style="margin: 0 0 8px; font-size: 25px; font-weight: 700; letter-spacing: -0.01em;">Bereit für dein eigenes Tischkraftwerk?</h2>
+            <p style="margin: 0; font-size: 14.5px; color: #6e6e73;">Sustable ONE+ Edelstahl · 1.750 € · 10 Jahre Garantie</p>
+          </div>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a onClick="{{ addToCart }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">In den Warenkorb</a>
+            <a onClick="{{ goProdukt }}" style="cursor: pointer; display: inline-flex; align-items: center; background: transparent; color: #1d1d1f; border: 1.5px solid #c7c7cc; border-radius: 980px; padding: 12px 26px; font-weight: 600; font-size: 15px;" style-hover="border-color: #1d1d1f;">Zum Produkt</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <!-- ===================== ÜBER UNS ===================== -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Über uns" style="background: #ffffff;">
+
+      <section style="background: #0a0a0c; padding: 120px 32px;">
+        <div style="max-width: 860px; margin: 0 auto; text-align: center;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;">Über uns</div>
+          <h1 style="margin: 0 0 22px; font-size: 50px; line-height: 1.14; font-weight: 700; letter-spacing: -0.02em; color: #ffffff;">Wir bringen die Energiewende auf deine Terrasse.</h1>
+          <p style="margin: 0 auto; max-width: 560px; font-size: 17px; line-height: 1.65; color: #86868b;">Sustable steht für Solarmöbel, die Design und nachhaltige Energie verbinden – durchdacht entwickelt, regional und fair gefertigt in Deutschland.</p>
+        </div>
+      </section>
+
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+          <div style="border-radius: 22px; overflow: hidden; height: 460px;">
+            <img src="https://sustable.eu/wp-content/uploads/2026/01/DSC02954-min-1365x2048.jpg" alt="Sustable Solartisch" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div>
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Unsere Geschichte</div>
+            <h2 style="margin: 0 0 20px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Aus einer einfachen Frage entstand eine neue Möbelkategorie.</h2>
+            <p style="margin: 0 0 16px; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Warum verschenken wir wertvolle Sonnenfläche auf Terrasse und Balkon, während Gartenmöbel dort ohnehin den ganzen Tag in der Sonne stehen? Aus dieser Idee wurde der Sustable Solartisch.</p>
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">Als Teil von e-con verbinden wir technisches Know-how aus der Energiebranche mit hochwertigem Möbeldesign – und machen saubere Energie für jeden zugänglich, ganz ohne eigene Dachfläche.</p>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 70px 32px; background: #f5f5f7;">
+        <div style="max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; text-align: center;">
+          <div>
+            <div style="font-size: 44px; font-weight: 800; letter-spacing: -0.02em; color: #1d1d1f;">2024</div>
+            <div style="font-size: 14.5px; color: #6e6e73; margin-top: 6px;">Gegründet, powered by e-con</div>
+          </div>
+          <div>
+            <div style="font-size: 44px; font-weight: 800; letter-spacing: -0.02em; color: #1d1d1f;">10 Jahre</div>
+            <div style="font-size: 14.5px; color: #6e6e73; margin-top: 6px;">Garantie auf jeden Solartisch</div>
+          </div>
+          <div>
+            <div style="font-size: 44px; font-weight: 800; letter-spacing: -0.02em; color: #1d1d1f;">100 %</div>
+            <div style="font-size: 14.5px; color: #6e6e73; margin-top: 6px;">Made &amp; Support in Germany</div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 1080px; margin: 0 auto;">
+          <h2 style="margin: 0 0 44px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f; text-align: center;">Wofür wir stehen.</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Nachhaltigkeit</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Saubere Energie und langlebige Materialien statt Wegwerfprodukte – ein Beitrag zu einer besseren Zukunft.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Design</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Technik, die man nicht verstecken muss. Unsere Solartische sind ein Statement für modernes, zeitloses Design.</p>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 20px; padding: 34px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 18px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Regionalität</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Kurze Wege, faire Arbeitsbedingungen und Fertigung in Deutschland – Qualität, der du vertrauen kannst.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 0 32px 110px; background: #ffffff;">
+        <div style="max-width: 1080px; margin: 0 auto; background: #0a0a0c; border-radius: 26px; padding: 64px 50px; text-align: center;">
+          <h2 style="margin: 0 0 16px; font-size: 32px; font-weight: 700; letter-spacing: -0.02em; color: #ffffff;">Lerne Sustable kennen.</h2>
+          <p style="margin: 0 auto 32px; max-width: 480px; font-size: 15.5px; line-height: 1.6; color: #86868b;">Ob privat auf der Terrasse oder als Händler im Sortiment – wir freuen uns auf dich.</p>
+          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #ffffff; color: #111113; border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 15px;" style-hover="background: #e8e8ed;">Zum Shop</a>
+            <a onClick="{{ goBusiness }}" style="cursor: pointer; display: inline-flex; align-items: center; background: transparent; color: #ffffff; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="border-color: #ffffff; background: rgba(255,255,255,0.06);">Für Händler</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </sc-if>
+
+  <!-- ===================== BLOG ===================== -->
+  <sc-if value="{{ isBlog }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Blog" style="background: #f5f5f7; padding: 80px 32px 120px; min-height: 70vh;">
+
+      <!-- Blog-Liste -->
+      <sc-if value="{{ blogListView }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width: 1180px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 56px;">
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Blog</div>
+            <h1 style="margin: 0 0 16px; font-size: 46px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Neues von Sustable.</h1>
+            <p style="margin: 0; font-size: 17px; color: #6e6e73;">Einblicke in unsere Journey, Micro-PV und die Energiewende für alle.</p>
+          </div>
+
+          <a onClick="{{ blogFeatured.open }}" style="display: grid; grid-template-columns: 1.2fr 1fr; background: #ffffff; border-radius: 22px; overflow: hidden; margin-bottom: 24px; color: #1d1d1f; cursor: pointer;" style-hover="box-shadow: 0 16px 44px rgba(0,0,0,0.1);">
+            <img src="{{ blogFeatured.img }}" alt="{{ blogFeatured.title }}" style="width: 100%; height: 380px; object-fit: cover; display: block;">
+            <div style="padding: 44px; display: flex; flex-direction: column; justify-content: center; gap: 14px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="background: #f5f5f7; color: #1d1d1f; font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 980px;">Aktueller Beitrag</span>
+                <span style="font-size: 13px; color: #86868b;">{{ blogFeatured.date }}</span>
+              </div>
+              <h2 style="margin: 0; font-size: 25px; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em;">{{ blogFeatured.title }}</h2>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">{{ blogFeatured.excerpt }}</p>
+              <span style="color: #1d1d1f; font-weight: 600; font-size: 14.5px;">Weiterlesen →</span>
+            </div>
+          </a>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <sc-for list="{{ blogRest }}" as="b" hint-placeholder-count="3">
+              <a onClick="{{ b.open }}" style="background: #ffffff; border-radius: 22px; overflow: hidden; color: #1d1d1f; display: flex; flex-direction: column; cursor: pointer;" style-hover="box-shadow: 0 16px 44px rgba(0,0,0,0.1);">
+                <img src="{{ b.img }}" alt="{{ b.title }}" style="width: 100%; height: 200px; object-fit: cover; display: block; background: #f5f5f7;">
+                <div style="padding: 28px; display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                  <span style="font-size: 13px; color: #86868b;">{{ b.date }}</span>
+                  <h3 style="margin: 0; font-size: 17.5px; line-height: 1.4; font-weight: 700;">{{ b.title }}</h3>
+                  <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #6e6e73;">{{ b.excerpt }}</p>
+                  <span style="color: #1d1d1f; font-weight: 600; font-size: 14px; margin-top: auto;">Weiterlesen →</span>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- Blog-Beitrag -->
+      <sc-if value="{{ blogPostView }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width: 760px; margin: 0 auto;">
+          <a onClick="{{ goBlogList }}" style="cursor: pointer; display: inline-flex; align-items: center; color: #6e6e73; font-weight: 600; font-size: 14.5px; margin-bottom: 28px;" style-hover="color: #1d1d1f;">← Alle Beiträge</a>
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">{{ postCat }} · {{ postDate }}</div>
+          <h1 style="margin: 0 0 28px; font-size: 38px; line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">{{ postTitle }}</h1>
+          <img src="{{ postImg }}" alt="{{ postTitle }}" style="width: 100%; height: 380px; object-fit: cover; display: block; border-radius: 22px; margin-bottom: 36px;">
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <sc-for list="{{ postBody }}" as="para" hint-placeholder-count="4">
+              <p style="margin: 0; font-size: 16.5px; line-height: 1.8; color: #2c2c2e;">{{ para }}</p>
+            </sc-for>
+          </div>
+          <div style="margin-top: 44px; padding-top: 32px; border-top: 1px solid #e0e0e4; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; color: #6e6e73;">Bereit für dein eigenes Tischkraftwerk?</span>
+            <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 12px 26px; font-weight: 600; font-size: 14.5px;" style-hover="background: #2c2c2e;">Zum Shop</a>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </sc-if>
+
+  <!-- ===================== FAQ ===================== -->
+  <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="FAQ" style="background: #ffffff; padding: 80px 32px 120px; min-height: 70vh;">
+      <div style="max-width: 840px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">FAQ</div>
+          <h1 style="margin: 0 0 16px; font-size: 46px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Häufige Fragen.</h1>
+          <p style="margin: 0; font-size: 17px; color: #6e6e73;">Alles Wichtige rund um deinen Sustable Solartisch.</p>
+        </div>
+        <sc-for list="{{ faqGroups }}" as="g" hint-placeholder-count="5">
+          <div style="margin-bottom: 40px;">
+            <h2 style="margin: 0 0 16px; font-size: 19px; font-weight: 700; color: #1d1d1f;">{{ g.cat }}</h2>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <sc-for list="{{ g.items }}" as="f" hint-placeholder-count="3">
+                <div style="background: #f5f5f7; border-radius: 16px; overflow: hidden;">
+                  <a onClick="{{ f.toggle }}" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 26px; color: #1d1d1f; font-weight: 600; font-size: 15.5px;" style-hover="color: #6e6e73;">
+                    {{ f.q }}
+                    <span style="font-size: 22px; font-weight: 500; color: #1d1d1f; flex-shrink: 0; line-height: 1;">{{ f.symbol }}</span>
+                  </a>
+                  <sc-if value="{{ f.isOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding: 0 26px 22px; font-size: 14.5px; line-height: 1.75; color: #6e6e73; white-space: pre-line;">{{ f.a }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <div style="background: #0a0a0c; border-radius: 22px; padding: 44px; text-align: center; margin-top: 20px;">
+          <h2 style="margin: 0 0 10px; font-size: 22px; font-weight: 700; color: #ffffff;">Deine Frage war nicht dabei?</h2>
+          <p style="margin: 0 0 26px; font-size: 14.5px; color: #86868b;">Schreib uns – wir melden uns innerhalb von 24 Stunden.</p>
+          <a href="mailto:louis.mueller@sustable.eu" style="display: inline-flex; align-items: center; background: #ffffff; color: #111113; border-radius: 980px; padding: 12px 26px; font-weight: 600; font-size: 14.5px;" style-hover="background: #e8e8ed;">Kontakt aufnehmen</a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== HÄNDLERSUCHE ===================== -->
+  <sc-if value="{{ isHaendler }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Händlersuche" style="background: #f5f5f7; padding: 80px 32px 110px; min-height: 70vh;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 44px;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Händlersuche</div>
+          <h1 style="margin: 0 0 16px; font-size: 46px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Händler finden.</h1>
+          <p style="margin: 0; font-size: 17px; color: #6e6e73;">Gib deine Stadt oder Postleitzahl ein und finde den nächsten Sustable-Fachhändler.</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; max-width: 600px; margin: 0 auto 18px;">
+          <input type="text" value="{{ searchQuery }}" onChange="{{ onSearchQuery }}" onKeyDown="{{ onSearchKey }}" placeholder="Stadt oder Postleitzahl eingeben" style="flex: 1; padding: 14px 22px; font-size: 15.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 980px; background: #ffffff; color: #1d1d1f; outline: none;" style-focus="border-color: #1d1d1f;">
+          <a onClick="{{ onSearchSubmit }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Suchen</a>
+        </div>
+        <sc-if value="{{ hasSearchInfo }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align: center; margin-bottom: 24px; font-size: 14.5px; font-weight: 600; color: #1d1d1f;">{{ searchInfo }}</div>
+        </sc-if>
+
+        <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: start; margin-top: 28px;">
+          <div ref="{{ mapRef }}" style="height: 540px; border-radius: 22px; overflow: hidden; background: #e8e8ed;"></div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sc-for list="{{ dealers }}" as="d" hint-placeholder-count="2">
+              <div style="background: #ffffff; border-radius: 20px; padding: 28px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+                  <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #1d1d1f;">{{ d.name }}</h3>
+                  <sc-if value="{{ d.hasDist }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size: 13.5px; font-weight: 700; color: #e8821d; white-space: nowrap;">{{ d.distText }}</span>
+                  </sc-if>
+                </div>
+                <div style="font-size: 13.5px; color: #86868b; margin-bottom: 14px;">{{ d.untertitel }}</div>
+                <div style="font-size: 14.5px; line-height: 1.7; color: #424245; margin-bottom: 8px;">{{ d.strasse }}<br>{{ d.ort }}</div>
+                <div style="font-size: 14.5px; line-height: 1.8; color: #424245; margin-bottom: 6px;">
+                  Tel. <a href="{{ d.telHref }}" style="color: #1d1d1f; font-weight: 600;">{{ d.tel }}</a><br>
+                  <a href="{{ d.mailHref }}" style="color: #1d1d1f; font-weight: 600; text-decoration: underline;">{{ d.mail }}</a>
+                </div>
+                <sc-if value="{{ d.hasZeiten }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size: 13.5px; line-height: 1.7; color: #424245; background: #f5f5f7; border-radius: 12px; padding: 10px 14px; margin: 10px 0 4px;">
+                    <span style="font-weight: 600;">Öffnungszeiten</span><br>{{ d.zeiten1 }}<br>{{ d.zeiten2 }}
+                  </div>
+                </sc-if>
+                <div style="display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;">
+                  <a onClick="{{ d.show }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 9px 18px; font-weight: 600; font-size: 13.5px;" style-hover="background: #2c2c2e;">Auf Karte zeigen</a>
+                  <a href="{{ d.routeHref }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; background: transparent; color: #1d1d1f; border: 1.5px solid #c7c7cc; border-radius: 980px; padding: 8px 17px; font-weight: 600; font-size: 13.5px;" style-hover="border-color: #1d1d1f;">Route planen</a>
+                </div>
+              </div>
+            </sc-for>
+            <div style="font-size: 13px; color: #86868b; line-height: 1.6; padding: 0 6px;">Du bist Händler und möchtest Sustable in dein Sortiment aufnehmen? <a onClick="{{ goBusiness }}" style="color: #1d1d1f; font-weight: 600; cursor: pointer; text-decoration: underline;">Werde Partner →</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== SHOP ===================== -->
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Shop" style="background: #f5f5f7; padding: 80px 32px 120px; min-height: 70vh;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Shop</div>
+          <h1 style="margin: 0 0 16px; font-size: 46px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Unsere Solartische.</h1>
+          <p style="margin: 0; font-size: 17px; color: #6e6e73;">Made in Germany · 10 Jahre Garantie · Plug &amp; Play</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;">
+          <sc-for list="{{ shopProducts }}" as="p" hint-placeholder-count="3">
+            <div style="background: #ffffff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column;">
+              <div onClick="{{ p.open }}" style="cursor: pointer; height: 270px; background: #f5f5f7; overflow: hidden;">
+                <img src="{{ p.img }}" alt="{{ p.fullName }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              </div>
+              <div style="padding: 30px; display: flex; flex-direction: column; gap: 14px; flex: 1;">
+                <div style="display: inline-flex;"><span style="background: #f5f5f7; color: #424245; font-size: 12px; font-weight: 600; padding: 6px 13px; border-radius: 980px;">{{ p.badge }}</span></div>
+                <h2 onClick="{{ p.open }}" style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f; cursor: pointer;">{{ p.name }}</h2>
+                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #6e6e73;">{{ p.desc }}</p>
+                <div style="margin-top: auto; display: flex; flex-direction: column; gap: 16px; padding-top: 8px;">
+                  <div style="font-size: 24px; font-weight: 700; color: #1d1d1f;">{{ p.priceFmt }}</div>
+                  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a onClick="{{ p.add }}" style="cursor: pointer; flex: 1; text-align: center; display: inline-flex; align-items: center; justify-content: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 11px 18px; font-weight: 600; font-size: 14px;" style-hover="background: #2c2c2e;">In den Warenkorb</a>
+                    <a onClick="{{ p.open }}" style="cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent; color: #1d1d1f; border: 1.5px solid #c7c7cc; border-radius: 980px; padding: 10px 18px; font-weight: 600; font-size: 14px;" style-hover="border-color: #1d1d1f;">Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <p style="text-align: center; font-size: 12.5px; color: #86868b; margin: 32px 0 0;">Lieferzeit ca. 2–3 Wochen · Versand innerhalb Deutschlands · Demo-Shop</p>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== PRODUKT-DETAIL ===================== -->
+  <sc-if value="{{ isProdukt }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Produkt Detail" style="background: #ffffff; padding: 50px 32px 120px;">
+      <div style="max-width: 1180px; margin: 0 auto;">
+        <div style="font-size: 13.5px; color: #86868b; margin-bottom: 36px;">
+          <a onClick="{{ goHome }}" style="color: #86868b; cursor: pointer;" style-hover="color: #1d1d1f;">Start</a>
+          <span> / </span>
+          <a onClick="{{ goShop }}" style="color: #86868b; cursor: pointer;" style-hover="color: #1d1d1f;">Shop</a>
+          <span> / </span>
+          <span style="color: #1d1d1f; font-weight: 600;">{{ pName }}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;">
+          <div style="border-radius: 22px; overflow: hidden; background: #f5f5f7; height: 480px;">
+            <img src="{{ pImg }}" alt="{{ pName }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div>
+            <h1 style="margin: 0 0 14px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">{{ pName }}</h1>
+            <div style="font-size: 30px; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;">{{ pPriceFmt }}</div>
+            <div style="font-size: 13px; color: #86868b; margin-bottom: 26px;">inkl. MwSt. · zzgl. Versand</div>
+            <p style="margin: 0 0 26px; font-size: 15px; line-height: 1.7; color: #6e6e73;">{{ pDesc }}</p>
+            <ul style="margin: 0 0 30px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #1d1d1f;">
+              <li style="display: flex; gap: 12px; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12l5 5 11-11"></path></svg>{{ pWpLine }}</li>
+              <li style="display: flex; gap: 12px; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12l5 5 11-11"></path></svg>Per Gasdruckdämpfer neigbar in den optimalen 25°-Winkel</li>
+              <li style="display: flex; gap: 12px; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12l5 5 11-11"></path></svg>Im Tischfuß versenkbare Rollen – mobil auf der Terrasse</li>
+              <li style="display: flex; gap: 12px; align-items: center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12l5 5 11-11"></path></svg>Wetterfest, Made in Germany, 10 Jahre Garantie</li>
+            </ul>
+            <div style="display: flex; gap: 14px; align-items: stretch; margin-bottom: 18px;">
+              <div style="display: flex; align-items: center; border: 1.5px solid #c7c7cc; border-radius: 980px; overflow: hidden;">
+                <a onClick="{{ decQty }}" style="cursor: pointer; padding: 12px 18px; font-size: 18px; font-weight: 600; color: #1d1d1f; user-select: none;" style-hover="background: #f5f5f7;">−</a>
+                <span style="min-width: 36px; text-align: center; font-weight: 700; font-size: 16px;">{{ qty }}</span>
+                <a onClick="{{ incQty }}" style="cursor: pointer; padding: 12px 18px; font-size: 18px; font-weight: 600; color: #1d1d1f; user-select: none;" style-hover="background: #f5f5f7;">+</a>
+              </div>
+              <a onClick="{{ addToCartQty }}" style="cursor: pointer; flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px 28px; font-weight: 600; font-size: 16px;" style-hover="background: #2c2c2e;">In den Warenkorb</a>
+            </div>
+            <div style="font-size: 13.5px; color: #424245; background: #f5f5f7; border-radius: 14px; padding: 14px 18px; line-height: 1.6;">
+              <span style="font-weight: 700;">Plug &amp; Play:</span> Ansteckkabel in die Außensteckdose stecken und Strom direkt ins Haus einspeisen – ohne Installation.
+            </div>
+            <div style="margin-top: 36px;">
+              <h2 style="margin: 0 0 14px; font-size: 18px; font-weight: 700; color: #1d1d1f;">Technische Daten</h2>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #e8e8ed; font-size: 14px;">
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Solarmodul</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">{{ pWp }}</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Wechselrichter</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">500 W</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Material</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">{{ pMaterial }}</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Maße</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">{{ pMasse }}</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Neigung</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">25° per Gasdruckdämpfer</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #86868b;">Garantie</div>
+                <div style="padding: 11px 0; border-bottom: 1px solid #e8e8ed; color: #1d1d1f; font-weight: 600;">10 Jahre</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== WARENKORB ===================== -->
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Warenkorb" style="background: #f5f5f7; padding: 80px 32px 120px; min-height: 70vh;">
+      <div style="max-width: 1080px; margin: 0 auto;">
+        <h1 style="margin: 0 0 36px; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Warenkorb</h1>
+
+        <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="background: #ffffff; border-radius: 22px; padding: 70px 40px; text-align: center;">
+            <p style="margin: 0 0 26px; font-size: 17px; color: #6e6e73;">Dein Warenkorb ist leer.</p>
+            <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">
+              Zum Shop
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+            </a>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; align-items: start;">
+            <div style="background: #ffffff; border-radius: 22px; padding: 10px 30px;">
+              <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="1">
+                <div style="display: flex; align-items: center; gap: 22px; padding: 22px 0; border-bottom: 1px solid #f0f0f2;">
+                  <div style="width: 92px; height: 92px; background: #f5f5f7; border-radius: 16px; overflow: hidden; flex-shrink: 0;">
+                    <img src="{{ it.img }}" alt="{{ it.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-weight: 700; font-size: 15.5px; color: #1d1d1f; margin-bottom: 4px;">{{ it.name }}</div>
+                    <div style="font-size: 13.5px; color: #86868b;">{{ it.priceFmt }} / Stück</div>
+                  </div>
+                  <div style="display: flex; align-items: center; border: 1.5px solid #d2d2d7; border-radius: 980px;">
+                    <a onClick="{{ it.dec }}" style="cursor: pointer; padding: 7px 14px; font-weight: 600; color: #1d1d1f; user-select: none;" style-hover="background: #f5f5f7;">−</a>
+                    <span style="min-width: 30px; text-align: center; font-weight: 700;">{{ it.qty }}</span>
+                    <a onClick="{{ it.inc }}" style="cursor: pointer; padding: 7px 14px; font-weight: 600; color: #1d1d1f; user-select: none;" style-hover="background: #f5f5f7;">+</a>
+                  </div>
+                  <div style="min-width: 90px; text-align: right; font-weight: 700; font-size: 15.5px;">{{ it.lineFmt }}</div>
+                  <a onClick="{{ it.remove }}" title="Entfernen" style="cursor: pointer; color: #86868b; font-size: 20px; padding: 6px; line-height: 1;" style-hover="color: #1d1d1f;">×</a>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background: #ffffff; border-radius: 22px; padding: 32px;">
+              <h2 style="margin: 0 0 20px; font-size: 19px; font-weight: 700;">Zusammenfassung</h2>
+              <div style="display: flex; justify-content: space-between; font-size: 14.5px; color: #6e6e73; padding: 8px 0;"><span>Zwischensumme</span><span style="font-weight: 600; color: #1d1d1f;">{{ cartTotalFmt }}</span></div>
+              <div style="display: flex; justify-content: space-between; font-size: 14.5px; color: #6e6e73; padding: 8px 0; border-bottom: 1px solid #f0f0f2; margin-bottom: 12px;"><span>Versand</span><span style="font-weight: 600; color: #1d1d1f;">kostenlos</span></div>
+              <div style="display: flex; justify-content: space-between; font-size: 17px; font-weight: 700; padding: 8px 0 22px;"><span>Gesamt</span><span>{{ cartTotalFmt }}</span></div>
+              <a onClick="{{ goCheckout }}" style="cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px; font-weight: 600; font-size: 15.5px;" style-hover="background: #2c2c2e;">
+                Zur Kasse
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+              </a>
+              <div style="text-align: center; font-size: 12.5px; color: #86868b; margin-top: 14px;">Demo-Shop – es wird keine echte Bestellung ausgelöst.</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== CHECKOUT ===================== -->
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Checkout" style="background: #f5f5f7; padding: 80px 32px 120px; min-height: 70vh;">
+      <div style="max-width: 740px; margin: 0 auto;">
+
+        <sc-if value="{{ ordered }}" hint-placeholder-val="{{ false }}">
+          <div style="background: #ffffff; border-radius: 22px; padding: 70px 50px; text-align: center;">
+            <div style="width: 62px; height: 62px; border-radius: 50%; background: #f5f5f7; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5 11-11"></path></svg>
+            </div>
+            <h1 style="margin: 0 0 14px; font-size: 30px; font-weight: 700; letter-spacing: -0.01em;">Vielen Dank für deine Bestellung!</h1>
+            <p style="margin: 0 0 8px; font-size: 15.5px; color: #6e6e73;">Bestellnummer <span style="font-weight: 700; color: #1d1d1f;">{{ orderNumber }}</span></p>
+            <p style="margin: 0 0 34px; font-size: 13.5px; color: #86868b;">Dies ist eine Demo – es wurde keine echte Bestellung ausgelöst.</p>
+            <a onClick="{{ goHome }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Zurück zur Startseite</a>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ notOrdered }}" hint-placeholder-val="{{ true }}">
+          <h1 style="margin: 0 0 10px; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Kasse</h1>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+            <div style="font-size: 14.5px; font-weight: 600; color: #1d1d1f;">{{ stepLabel }}</div>
+            <div style="font-size: 12.5px; color: #86868b;">Demo-Checkout</div>
+          </div>
+          <div style="height: 4px; background: #e8e8ed; border-radius: 980px; margin-bottom: 34px; overflow: hidden;">
+            <div style="{{ progressStyle }}"></div>
+          </div>
+
+          <sc-if value="{{ checkoutEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #ffffff; border-radius: 22px; padding: 60px 40px; text-align: center;">
+              <p style="margin: 0 0 24px; font-size: 16px; color: #6e6e73;">Dein Warenkorb ist leer – lege zuerst einen Solartisch in den Warenkorb.</p>
+              <a onClick="{{ goShop }}" style="cursor: pointer; display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Zum Shop</a>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ step1 }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #ffffff; border-radius: 22px; padding: 40px;">
+              <h2 style="margin: 0 0 24px; font-size: 21px; font-weight: 700;">Lieferadresse</h2>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <input name="vorname" value="{{ fVorname }}" onChange="{{ onField }}" placeholder="Vorname *" style="padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+                <input name="nachname" value="{{ fNachname }}" onChange="{{ onField }}" placeholder="Nachname *" style="padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+                <input name="email" value="{{ fEmail }}" onChange="{{ onField }}" placeholder="E-Mail *" style="grid-column: 1 / -1; padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+                <input name="strasse" value="{{ fStrasse }}" onChange="{{ onField }}" placeholder="Straße und Hausnummer *" style="grid-column: 1 / -1; padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+                <input name="plz" value="{{ fPlz }}" onChange="{{ onField }}" placeholder="PLZ *" style="padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+                <input name="ort" value="{{ fOrt }}" onChange="{{ onField }}" placeholder="Ort *" style="padding: 14px 18px; font-size: 14.5px; font-family: Montserrat, sans-serif; border: 1px solid #d2d2d7; border-radius: 12px; outline: none;" style-focus="border-color: #1d1d1f;">
+              </div>
+              <sc-if value="{{ hasFormError }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 16px; font-size: 13.5px; font-weight: 600; color: #d70015;">{{ formError }}</div>
+              </sc-if>
+              <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <a onClick="{{ goCart }}" style="cursor: pointer; display: inline-flex; align-items: center; color: #6e6e73; font-weight: 600; font-size: 14.5px; padding: 13px 0;" style-hover="color: #1d1d1f;">← Zurück zum Warenkorb</a>
+                <a onClick="{{ toStep2 }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Weiter zur Zahlung</a>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #ffffff; border-radius: 22px; padding: 40px;">
+              <h2 style="margin: 0 0 24px; font-size: 21px; font-weight: 700;">Zahlungsart</h2>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <label style="display: flex; align-items: center; gap: 14px; border: 1.5px solid #d2d2d7; border-radius: 14px; padding: 16px 18px; cursor: pointer; font-size: 14.5px; font-weight: 600;" style-hover="border-color: #1d1d1f;">
+                  <input type="radio" name="payment" value="ueberweisung" checked="{{ payUeberweisung }}" onChange="{{ onPayment }}" style="accent-color: #111113; width: 18px; height: 18px;">
+                  Vorkasse / Überweisung
+                </label>
+                <label style="display: flex; align-items: center; gap: 14px; border: 1.5px solid #d2d2d7; border-radius: 14px; padding: 16px 18px; cursor: pointer; font-size: 14.5px; font-weight: 600;" style-hover="border-color: #1d1d1f;">
+                  <input type="radio" name="payment" value="paypal" checked="{{ payPaypal }}" onChange="{{ onPayment }}" style="accent-color: #111113; width: 18px; height: 18px;">
+                  PayPal
+                </label>
+                <label style="display: flex; align-items: center; gap: 14px; border: 1.5px solid #d2d2d7; border-radius: 14px; padding: 16px 18px; cursor: pointer; font-size: 14.5px; font-weight: 600;" style-hover="border-color: #1d1d1f;">
+                  <input type="radio" name="payment" value="kreditkarte" checked="{{ payKreditkarte }}" onChange="{{ onPayment }}" style="accent-color: #111113; width: 18px; height: 18px;">
+                  Kreditkarte
+                </label>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <a onClick="{{ toStep1 }}" style="cursor: pointer; display: inline-flex; align-items: center; color: #6e6e73; font-weight: 600; font-size: 14.5px; padding: 13px 0;" style-hover="color: #1d1d1f;">← Zurück</a>
+                <a onClick="{{ toStep3 }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Weiter zur Übersicht</a>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ step3 }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #ffffff; border-radius: 22px; padding: 40px;">
+              <h2 style="margin: 0 0 24px; font-size: 21px; font-weight: 700;">Bestellübersicht</h2>
+              <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="1">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f2; font-size: 14.5px;">
+                  <span style="font-weight: 600;">{{ it.qty }} × {{ it.name }}</span>
+                  <span style="font-weight: 700;">{{ it.lineFmt }}</span>
+                </div>
+              </sc-for>
+              <div style="display: flex; justify-content: space-between; padding: 16px 0 6px; font-size: 17px; font-weight: 700;">
+                <span>Gesamt</span><span>{{ cartTotalFmt }}</span>
+              </div>
+              <div style="font-size: 13.5px; color: #424245; background: #f5f5f7; border-radius: 14px; padding: 14px 18px; margin: 18px 0 8px; line-height: 1.7;">
+                <span style="font-weight: 700;">Lieferung an:</span> {{ fVorname }} {{ fNachname }}, {{ fStrasse }}, {{ fPlz }} {{ fOrt }}<br>
+                <span style="font-weight: 700;">Zahlung:</span> {{ paymentLabel }}
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+                <a onClick="{{ toStep2 }}" style="cursor: pointer; display: inline-flex; align-items: center; color: #6e6e73; font-weight: 600; font-size: 14.5px; padding: 13px 0;" style-hover="color: #1d1d1f;">← Zurück</a>
+                <a onClick="{{ placeOrder }}" style="cursor: pointer; display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 16px;" style-hover="background: #2c2c2e;">Jetzt kaufen (Demo)</a>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===================== BUSINESS ===================== -->
+  <sc-if value="{{ isBusiness }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Business">
+
+      <section style="background: #0a0a0c; padding: 110px 32px;">
+        <div style="max-width: 1080px; margin: 0 auto; text-align: center;">
+          <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px;">Sustable Business</div>
+          <h1 style="margin: 0 0 24px; font-size: 52px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; color: #ffffff;">Willkommen bei<br>Sustable Business.</h1>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 42px;">
+            <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: #ffffff; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 980px;">Made in Germany</span>
+            <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: #ffffff; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 980px;">10 Jahre Garantie</span>
+            <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: #ffffff; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 980px;">100 % technischer Kundensupport</span>
+          </div>
+          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <a href="https://calendar.app.google/j1BujJkMVCzWWSyg6" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 9px; background: #ffffff; color: #111113; border-radius: 980px; padding: 15px 32px; font-weight: 600; font-size: 16px;" style-hover="background: #e8e8ed;">
+              Jetzt Termin buchen
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#111113" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+            </a>
+            <a href="https://sustable.eu/wp-content/uploads/2026/03/Broschuere.pdf" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; background: transparent; color: #ffffff; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 980px; padding: 14px 30px; font-weight: 600; font-size: 16px;" style-hover="border-color: #ffffff; background: rgba(255,255,255,0.06);">Broschüre herunterladen</a>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+          <div>
+            <div style="color: #86868b; font-weight: 600; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">Design trifft Energie</div>
+            <h2 style="margin: 0 0 20px; font-size: 36px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f;">Die neue Produktkategorie für den modernen Outdoor-Markt.</h2>
+            <p style="margin: 0 0 16px; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">
+              Wir verbinden zeitlose Ästhetik mit nachhaltiger Innovation. Unsere Solartische sind mehr als nur Möbel – sie sind ein Statement für einen nachhaltigen Lifestyle, verpackt in hochwertigem Design.
+            </p>
+            <p style="margin: 0 0 30px; font-size: 15.5px; line-height: 1.75; color: #6e6e73;">
+              Sie sind Category Manager oder Einkäufer und suchen nach einem echten USP für Ihr Sortiment? Entdecken Sie mit Sustable eine völlig neue Möbelkategorie, die Design und Funktion perfekt vereint.
+            </p>
+            <a href="https://calendar.app.google/j1BujJkMVCzWWSyg6" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 9px; background: #111113; color: #ffffff; border-radius: 980px; padding: 13px 28px; font-weight: 600; font-size: 15px;" style-hover="background: #2c2c2e;">Unverbindliches Angebot anfragen</a>
+          </div>
+          <div style="background: #f5f5f7; border-radius: 22px; padding: 40px; display: flex; align-items: center; justify-content: center;">
+            <img src="https://sustable.eu/wp-content/uploads/2025/10/One_1.avif" alt="Sustable ONE+" style="max-width: 100%; height: auto; display: block;">
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 100px 32px; background: #f5f5f7;">
+        <div style="max-width: 1080px; margin: 0 auto;">
+          <h2 style="margin: 0 0 44px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f; text-align: center;">Ihre Vorteile als Geschäftspartner.</h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div style="background: #ffffff; border-radius: 20px; padding: 34px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M7 14l4-4 3 3 5-6"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700;">Exklusive Konditionen</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Attraktive Handelsmargen und faire Partnerkonditionen für Ihr Sortiment.</p>
+            </div>
+            <div style="background: #ffffff; border-radius: 20px; padding: 34px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700;">Persönliche Betreuung</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Feste Ansprechpartner, Schulung Ihres Teams und Unterstützung am POS.</p>
+            </div>
+            <div style="background: #ffffff; border-radius: 20px; padding: 34px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 700;">Erstklassige Qualität</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: #6e6e73;">Made in Germany, 10 Jahre Garantie und 100 % technischer Kundensupport.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 110px 32px; background: #ffffff;">
+        <div style="max-width: 880px; margin: 0 auto;">
+          <h2 style="margin: 0 0 14px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f; text-align: center;">Ihre Ansprechpartner.</h2>
+          <p style="margin: 0 auto 48px; max-width: 520px; text-align: center; font-size: 15.5px; color: #6e6e73; line-height: 1.6;">Buchen Sie direkt einen Termin – wir melden uns innerhalb von 24 Stunden.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div style="background: #f5f5f7; border-radius: 22px; padding: 38px; text-align: center;">
+              <img src="https://sustable.eu/wp-content/uploads/2026/03/louis-mueller-q.jpg" alt="Louis Müller" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin: 0 auto 18px; display: block;">
+              <div style="font-weight: 700; font-size: 18px; margin-bottom: 4px;">Louis Müller</div>
+              <div style="font-size: 13.5px; color: #86868b; margin-bottom: 16px;">Vertrieb &amp; Partnermanagement</div>
+              <div style="font-size: 14.5px; line-height: 1.9; color: #424245; margin-bottom: 22px;">
+                <a href="mailto:louis.mueller@sustable.eu" style="color: #1d1d1f; font-weight: 600; text-decoration: underline;">louis.mueller@sustable.eu</a><br>
+                <a href="tel:+4915141872588" style="color: #1d1d1f; font-weight: 600;">+49 1514 1872588</a>
+              </div>
+              <a href="https://calendar.app.google/j1BujJkMVCzWWSyg6" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 11px 24px; font-weight: 600; font-size: 14px;" style-hover="background: #2c2c2e;">Termin buchen</a>
+            </div>
+            <div style="background: #f5f5f7; border-radius: 22px; padding: 38px; text-align: center;">
+              <img src="https://sustable.eu/wp-content/uploads/2026/03/nils-schreitmueller-q.jpg" alt="Nils Schreitmüller" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; margin: 0 auto 18px; display: block;">
+              <div style="font-weight: 700; font-size: 18px; margin-bottom: 4px;">Nils Schreitmüller</div>
+              <div style="font-size: 13.5px; color: #86868b; margin-bottom: 16px;">Vertrieb &amp; Partnermanagement</div>
+              <div style="font-size: 14.5px; line-height: 1.9; color: #424245; margin-bottom: 22px;">
+                <a href="mailto:nils.schreitmueller@sustable.eu" style="color: #1d1d1f; font-weight: 600; text-decoration: underline;">nils.schreitmueller@sustable.eu</a><br>
+                <a href="tel:+4915901129733" style="color: #1d1d1f; font-weight: 600;">+49 159 01129733</a>
+              </div>
+              <a href="https://calendar.app.google/j1BujJkMVCzWWSyg6" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; background: #111113; color: #ffffff; border-radius: 980px; padding: 11px 24px; font-weight: 600; font-size: 14px;" style-hover="background: #2c2c2e;">Termin buchen</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="padding: 90px 32px; background: #0a0a0c;">
+        <div style="max-width: 880px; margin: 0 auto; text-align: center;">
+          <h2 style="margin: 0 0 28px; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #ffffff;">Setzen wir gemeinsam neue Maßstäbe im Möbelhandel.</h2>
+          <a href="https://calendar.app.google/j1BujJkMVCzWWSyg6" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 9px; background: #ffffff; color: #111113; border-radius: 980px; padding: 15px 32px; font-weight: 600; font-size: 16px;" style-hover="background: #e8e8ed;">
+            Jetzt Kontakt aufnehmen
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#111113" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </sc-if>
+
+  </main>
+
+  <!-- Toast -->
+  <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 2000; background: #111113; color: #ffffff; font-size: 14.5px; font-weight: 600; padding: 14px 26px; border-radius: 980px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); display: flex; align-items: center; gap: 12px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5 11-11"></path></svg>
+      {{ toastText }}
+      <a onClick="{{ goCart }}" style="cursor: pointer; color: #ffffff; font-weight: 700; text-decoration: underline;">Zum Warenkorb</a>
+    </div>
+  </sc-if>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background: #ffffff; border-top: 1px solid #e8e8ed; padding: 56px 32px 36px; position: relative; z-index: 2;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 34px;">
+        <div style="display: flex; align-items: center;">
+          <img src="assets/logo.png" alt="Sustable" style="height: 32px; width: auto;">
+        </div>
+        <nav style="display: flex; gap: 26px; font-size: 13.5px; font-weight: 500; flex-wrap: wrap;">
+          <a onClick="{{ goShop }}" style="color: #424245; cursor: pointer;" style-hover="color: #1d1d1f;">Shop</a>
+          <a onClick="{{ goHaendler }}" style="color: #424245; cursor: pointer;" style-hover="color: #1d1d1f;">Händlersuche</a>
+          <a onClick="{{ goBusiness }}" style="color: #424245; cursor: pointer;" style-hover="color: #1d1d1f;">Business</a>
+          <a onClick="{{ goBlog }}" style="color: #424245; cursor: pointer;" style-hover="color: #1d1d1f;">Blog</a>
+          <a onClick="{{ goFaq }}" style="color: #424245; cursor: pointer;" style-hover="color: #1d1d1f;">FAQ</a>
+          <a href="https://sustable.eu/impressum/" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">Impressum</a>
+          <a href="https://sustable.eu/datenschutzerklaerung/" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">Datenschutz</a>
+          <a href="https://sustable.eu/widerrufsbelehrung/" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">Widerrufsbelehrung</a>
+          <a href="https://sustable.eu/agb/" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">AGB</a>
+        </nav>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; border-top: 1px solid #f0f0f2; padding-top: 26px;">
+        <div style="font-size: 13px; color: #86868b;">© 2026 Sustable powered by e-con</div>
+        <div style="display: flex; gap: 18px; font-size: 13px; font-weight: 600;">
+          <a href="https://www.linkedin.com/company/sustable-poweredbyecon" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">LinkedIn</a>
+          <a href="https://www.instagram.com/sustable.eu/" target="_blank" rel="noopener" style="color: #424245;" style-hover="color: #1d1d1f;">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = (() => {
+    let cart = [];
+    try { cart = JSON.parse(window.localStorage.getItem('sustable_demo_cart_v1') || '[]'); } catch (e) { cart = []; }
+    return {
+      page: 'home',
+      cart: cart,
+      qty: 1,
+      selectedProduct: 'one-plus',
+      calcProduct: 'one-plus',
+      blogPost: null,
+      strompreis: 35,
+      region: 'sued',
+      searchQuery: '',
+      searchInfo: null,
+      distances: null,
+      checkoutStep: 1,
+      fields: { vorname: '', nachname: '', email: '', strasse: '', plz: '', ort: '' },
+      payment: 'ueberweisung',
+      formError: null,
+      ordered: false,
+      orderNumber: '',
+      toast: null,
+      openFaq: null
+    };
+  })();
+
+  PRODUCTS = [
+    {
+      id: 'one-plus',
+      name: 'Sustable ONE+ Edelstahl',
+      fullName: 'Solartisch Sustable ONE+ Edelstahl',
+      shortLabel: 'ONE+',
+      price: 1750,
+      wp: 465,
+      kwp: 0.465,
+      material: 'Edelstahl, gebürstet',
+      masse: '172 × 115 × 75 cm',
+      img: 'https://sustable.eu/wp-content/uploads/2025/10/One_1.avif',
+      badge: '465 Wp · Edelstahl',
+      tagline: 'Das Flaggschiff aus gebürstetem Edelstahl.',
+      desc: 'Eleganter Solartisch aus gebürstetem Edelstahl mit 465 Wp-Solarmodul und 500 W-Wechselrichter – für Balkon, Terrasse oder Garten.'
+    },
+    {
+      id: 'one',
+      name: 'Sustable ONE Aluminium',
+      fullName: 'Solartisch Sustable ONE Aluminium',
+      shortLabel: 'ONE',
+      price: 1490,
+      wp: 465,
+      kwp: 0.465,
+      material: 'Aluminium, anthrazit',
+      masse: '172 × 115 × 75 cm',
+      img: 'https://sustable.eu/wp-content/uploads/2025/10/One_7.avif',
+      badge: '465 Wp · Aluminium',
+      tagline: 'Gleiche Leistung, leichter Aluminiumrahmen.',
+      desc: 'Solartisch mit pulverbeschichtetem Aluminiumrahmen in Anthrazit und 465 Wp-Solarmodul – leichter und besonders wetterbeständig.'
+    },
+    {
+      id: 'mini',
+      name: 'Sustable mini',
+      fullName: 'Solartisch Sustable mini',
+      shortLabel: 'mini',
+      price: 1190,
+      wp: 315,
+      kwp: 0.315,
+      material: 'Aluminium, anthrazit',
+      masse: '140 × 80 × 75 cm',
+      img: 'https://sustable.eu/wp-content/uploads/2025/10/One_6.avif',
+      badge: '315 Wp · kompakt',
+      tagline: 'Kompakt für Balkon und kleine Terrassen.',
+      desc: 'Der kompakte Solartisch mit 315 Wp-Modul – ideal für Balkon und kleinere Terrassen, mit identischer Plug-&-Play-Technik.'
+    }
+  ];
+
+  prod(id) { return this.PRODUCTS.find(p => p.id === id) || this.PRODUCTS[0]; }
+
+  DEALERS = [
+    {
+      id: 'creativ', name: 'BÜRO-CREATIV GmbH', untertitel: 'Fachhändler · Koblenz',
+      strasse: 'Schönbornsluster Straße 53', ort: '56070 Koblenz',
+      tel: '+49 261 579780', telHref: 'tel:+49261579780',
+      mail: 'info@buero-creativ.de', mailHref: 'mailto:info@buero-creativ.de',
+      zeiten1: null, zeiten2: null,
+      lat: 50.3878, lng: 7.5789,
+      routeHref: 'https://www.google.com/maps/dir/?api=1&destination=Sch%C3%B6nbornsluster%20Stra%C3%9Fe%2053%2C%2056070%20Koblenz'
+    },
+    {
+      id: 'wassermann', name: 'Möbel Wassermann', untertitel: 'Interliving · Memmingen',
+      strasse: 'Mittereschweg 2', ort: '87700 Memmingen',
+      tel: '+49 8331 97670', telHref: 'tel:+49833197670',
+      mail: 'info@moebel-wassermann.de', mailHref: 'mailto:info@moebel-wassermann.de',
+      zeiten1: 'Mo–Fr: 10:00–18:30 Uhr', zeiten2: 'Sa: 09:00–18:00 Uhr',
+      lat: 47.9741, lng: 10.1632,
+      routeHref: 'https://www.google.com/maps/dir/?api=1&destination=Mittereschweg%202%2C%2087700%20Memmingen'
+    }
+  ];
+
+  CITIES = {
+    'koblenz': [50.356, 7.594], 'memmingen': [47.984, 10.181], 'münchen': [48.137, 11.575], 'muenchen': [48.137, 11.575],
+    'berlin': [52.52, 13.405], 'hamburg': [53.551, 9.994], 'köln': [50.937, 6.96], 'koeln': [50.937, 6.96],
+    'frankfurt': [50.11, 8.682], 'stuttgart': [48.776, 9.183], 'hannover': [52.376, 9.732], 'leipzig': [51.34, 12.375],
+    'dresden': [51.05, 13.737], 'nürnberg': [49.454, 11.077], 'nuernberg': [49.454, 11.077], 'düsseldorf': [51.226, 6.773],
+    'duesseldorf': [51.226, 6.773], 'bremen': [53.08, 8.80], 'dortmund': [51.514, 7.466], 'essen': [51.456, 7.012],
+    'augsburg': [48.371, 10.898], 'ulm': [48.401, 9.987], 'kempten': [47.726, 10.314], 'freiburg': [47.999, 7.842],
+    'mainz': [50.0, 8.27], 'bonn': [50.735, 7.1], 'wiesbaden': [50.082, 8.24], 'karlsruhe': [49.007, 8.404]
+  };
+
+  PLZ_ZONES = {
+    '0': [51.05, 13.74], '1': [52.52, 13.40], '2': [53.55, 9.99], '3': [51.32, 9.49], '4': [51.51, 7.47],
+    '5': [50.74, 7.10], '6': [50.11, 8.68], '7': [48.78, 9.18], '8': [48.14, 11.58], '9': [49.45, 11.08]
+  };
+
+  SPEC_YIELD = { nord: 950, mitte: 1020, sued: 1100 };
+
+  FAQS = [
+    { cat: 'Allgemeine Fragen', items: [
+      { k: 'a1', q: 'Was ist ein Solartisch?', a: 'Ein Solartisch ist ein Tisch mit einer integrierten Solarzelle, die Sonnenenergie in Strom umwandelt. Unser Modell verfügt über eine leistungsstarke 470 W-Solarzelle und kann wie ein Balkonkraftwerk genutzt werden.' },
+      { k: 'a2', q: 'Wie funktioniert der Solartisch?', a: 'Die Solarzelle in der Tischplatte wandelt Sonnenlicht in Gleichstrom (DC) um. Ein integrierter Mikro-Wechselrichter konvertiert diesen in nutzbaren Wechselstrom (AC), der direkt ins Hausnetz eingespeist werden kann.' },
+      { k: 'a3', q: 'Kann ich den Tisch als normales Möbelstück nutzen?', a: 'Ja! Der Solartisch ist wetterfest, stabil und kann sowohl als Esstisch, Gartentisch oder Arbeitsplatz genutzt werden. Er ist robust und leicht zu reinigen.' }
+    ]},
+    { cat: 'Technische Fragen', items: [
+      { k: 't1', q: 'Welche technischen Daten hat der Solartisch?', a: '• Leistung: 470 W PV-Modul\n• Wechselrichter: 500 W Mikro-Wechselrichter integriert\n• Material: entspiegeltes, gehärtetes Glas mit Aluminiumrahmen\n• Wetterfestigkeit: IP65 (geeignet für den Außeneinsatz)\n• Maße: 172 cm × 115 cm × 75 cm\n• Gewicht: ca. 50 kg' },
+      { k: 't2', q: 'Wie viel Strom kann der Solartisch erzeugen?', a: 'Bei guten Bedingungen kann der Tisch ca. 450–500 kWh pro Jahr erzeugen – genug, um mehr als einen Kühlschrank das ganze Jahr zu betreiben oder dein Smartphone über 100.000-mal aufzuladen.' },
+      { k: 't3', q: 'Brauche ich einen zusätzlichen Wechselrichter?', a: 'Nein, der Tisch hat bereits einen integrierten 500 W Mikro-Wechselrichter. Er wird direkt per Steckdose ans Hausnetz angeschlossen.' }
+    ]},
+    { cat: 'Installation & Nutzung', items: [
+      { k: 'i1', q: 'Wie installiere ich den Solartisch?', a: 'Die Installation ist denkbar einfach:\n1. Den Tisch an einem sonnigen Platz aufstellen.\n2. Die vier Füße am Rahmen und den Wechselrichter nach Anleitung montieren.\n3. Mit der Steckdose verbinden – fertig!' },
+      { k: 'i2', q: 'Muss der Solartisch genehmigt werden?', a: 'In Deutschland sind Balkonkraftwerke bis 800 W ohne Genehmigung erlaubt. Unser 500 W-Solartisch liegt innerhalb dieser Grenze. Seit April 2024 ist nur noch eine einfache Anmeldung im Marktstammdatenregister erforderlich.' },
+      { k: 'i3', q: 'Wo ist der beste Standort für den Tisch?', a: 'Grundsätzlich überall, wo ihn die Sonne erreicht – am besten Balkon, Terrasse, Garten oder Dachterrasse. Direktes Sonnenlicht maximiert den Stromertrag. Dank der versteckten Rollen kann ihn eine einzige Person kinderleicht in eine andere Position bringen.' },
+      { k: 'i4', q: 'Kann ich den Tisch auch im Innenbereich nutzen?', a: 'Ja, aber der Stromertrag ist dann stark reduziert, da Fenster UV-Strahlung filtern. Es ist nicht zu empfehlen.' }
+    ]},
+    { cat: 'Pflege & Langlebigkeit', items: [
+      { k: 'p1', q: 'Wie reinige ich den Solartisch?', a: 'Ein feuchtes Tuch mit Glasreiniger reicht aus. Kratzer werden durch das gehärtete Glas vermieden.' },
+      { k: 'p2', q: 'Ist der Tisch wetterfest?', a: 'Ja! Der Tisch ist nach IP44 zertifiziert und hält Regen, Schnee und Sonne problemlos stand.' },
+      { k: 'p3', q: 'Wie lange hält das PV-Modul?', a: 'Die Lebensdauer beträgt 25 Jahre und länger, wobei die Leistung nach 20 Jahren noch bei über ca. 90 % liegt.' }
+    ]},
+    { cat: 'Kauf & Garantie', items: [
+      { k: 'k1', q: 'Wie viel kostet der Solartisch?', a: 'Sustable ONE (Aluminium Anthrazit – ohne Rollen): 1.400 €\nSustable ONE (Aluminium Anthrazit – mit Rollen): 1.490 €\nSustable ONE+ (Edelstahl gebürstet – ohne Rollen): 1.500 €\nSustable ONE+ (Edelstahl gebürstet – mit Rollen): 1.590 €' },
+      { k: 'k2', q: 'Ist der Solartisch förderfähig und umsatzsteuerbefreit?', a: 'Ja. Der Solartisch ist ein Tischkraftwerk und damit ein Kleinkraftwerk, das in den meisten deutschen Regionen förderfähig ist. Für die Lieferung von Solartischen mit integrierter Photovoltaikanlage unter 30 kWp zur Nutzung im häuslichen Umfeld gilt der Umsatzsteuersatz von 0 % gemäß § 12 Abs. 3 Nr. 1 UStG.' }
+    ]}
+  ];
+
+  BLOG_POSTS = [
+    {
+      id: 'journey',
+      date: '31. März 2026',
+      cat: 'Unternehmen',
+      title: 'Solartische statt Gartentisch – Unsere Journey von Januar bis März bei Sustable',
+      img: 'https://sustable.eu/wp-content/uploads/2026/03/DSC04368-2048x1365.jpg',
+      excerpt: 'Die Energiewende findet zunehmend im eigenen Zuhause statt. Während Balkonkraftwerke immer beliebter werden, entsteht mit Solartischen eine neue Kategorie nachhaltiger Gartenmöbel.',
+      body: [
+        'Die Energiewende findet zunehmend im eigenen Zuhause statt. Während Balkonkraftwerke immer beliebter werden, entsteht mit Solartischen eine völlig neue Kategorie nachhaltiger Gartenmöbel: ein Tisch, der nicht nur schön aussieht, sondern gleichzeitig sauberen Strom erzeugt.',
+        'Die ersten Monate des Jahres standen ganz im Zeichen der Serienreife. Aus zahlreichen Prototypen wurde ein Produkt, das sich sehen lassen kann – vom gebürsteten Edelstahlrahmen bis zum nahtlos integrierten Solarmodul.',
+        'Besonders stolz sind wir auf die Fertigung: Unsere Solartische werden regional und fair produziert. Kurze Wege, faire Arbeitsbedingungen und hochwertige Materialien sind für uns kein Marketing, sondern gelebte Praxis.',
+        'In den kommenden Monaten konzentrieren wir uns auf den Ausbau unseres Händlernetzes und den Launch der Sustable-App, mit der du den Ertrag deines Tischkraftwerks jederzeit im Blick hast. Es bleibt spannend – wir halten dich auf dem Laufenden.'
+      ]
+    },
+    {
+      id: 'micro-pv',
+      date: '2. September 2025',
+      cat: 'Wissen',
+      title: 'Warum Micro-PV die Zukunft ist: kleine Solarkraftwerke für jedermann',
+      img: 'https://sustable.eu/wp-content/uploads/2025/10/One_6.avif',
+      excerpt: 'Die Zukunft der Energieversorgung wird nicht nur auf großen Dächern entschieden, sondern im Alltag jedes Einzelnen.',
+      body: [
+        'Die Zukunft der Energieversorgung wird nicht nur auf großen Dächern und in Solarparks entschieden, sondern im Alltag jedes Einzelnen. Micro-PV – also kleine, dezentrale Photovoltaik-Lösungen – macht Solarstrom für alle zugänglich.',
+        'Der große Vorteil: Es braucht weder eine eigene Dachfläche noch eine aufwändige Installation. Ein Plug-&-Play-Gerät wird einfach in die Steckdose gesteckt und speist Strom direkt ins Hausnetz ein.',
+        'Genau hier setzt der Sustable Solartisch an. Er verbindet die Idee des Balkonkraftwerks mit einem hochwertigen Möbelstück – und macht so aus ungenutzter Terrassen- oder Balkonfläche ein kleines Kraftwerk.',
+        'Micro-PV ist damit mehr als ein Trend: Es ist ein wichtiger Baustein einer demokratischen Energiewende, an der sich jeder beteiligen kann.'
+      ]
+    },
+    {
+      id: 'energiewende',
+      date: '26. August 2025',
+      cat: 'Wissen',
+      title: 'Energiewende für alle – so gelingt der Umstieg für jeden',
+      img: 'https://sustable.eu/wp-content/uploads/2026/01/DSC02941-min-2048x1365.jpg',
+      excerpt: 'Klimawandel, steigende Energiepreise und politische Abhängigkeiten machen deutlich: Die Energiewende ist ein Thema der Gegenwart.',
+      body: [
+        'Klimawandel, steigende Energiepreise und politische Abhängigkeiten machen deutlich: Die Energiewende ist kein Thema der fernen Zukunft, sondern der Gegenwart.',
+        'Viele Menschen möchten ihren Beitrag leisten, scheitern aber an Hürden wie fehlendem Eigenheim, hohen Anschaffungskosten oder komplizierter Bürokratie. Dabei muss der Einstieg gar nicht schwer sein.',
+        'Kleine, dezentrale Lösungen senken die Einstiegshürde drastisch. Wer mit einem Solartisch oder Balkonkraftwerk startet, spart sofort Stromkosten und gewinnt ein Stück Unabhängigkeit – ganz ohne Dachmontage.',
+        'Unser Ziel bei Sustable ist es, die Energiewende so einfach und attraktiv wie möglich zu machen. Denn echte Veränderung entsteht, wenn viele mitmachen.'
+      ]
+    },
+    {
+      id: 'balkon-garten',
+      date: '6. August 2025',
+      cat: 'Produkt',
+      title: 'Nachhaltige Energie für Balkon & Garten: Warum wir den Sustable Solartisch entwickelt haben',
+      img: 'https://sustable.eu/wp-content/uploads/2025/10/One_1.avif',
+      excerpt: 'Die Geschichte hinter dem Solartisch – und warum Balkon und Garten perfekte Orte für saubere Energie sind.',
+      body: [
+        'Alles begann mit einer einfachen Frage: Warum verschenken wir wertvolle Sonnenfläche auf Terrasse und Balkon, während Gartenmöbel dort ohnehin den ganzen Tag in der Sonne stehen?',
+        'Aus dieser Idee entstand der Sustable Solartisch – ein Möbelstück, das die Funktion eines klassischen Gartentisches mit der Leistung eines Mini-Solarkraftwerks vereint.',
+        'Bei der Entwicklung war uns wichtig, dass die Technik nicht den Komfort einschränkt: Der Tisch lässt sich ganz normal nutzen, ist wetterfest und dank versenkbarer Rollen flexibel platzierbar.',
+        'Das Ergebnis ist ein Produkt, das Design, Nachhaltigkeit und Funktion vereint – und das die Energiewende auf die heimische Terrasse bringt.'
+      ]
+    }
+  ];
+
+  fmtEur(n, decimals) {
+    const d = decimals === undefined ? 0 : decimals;
+    return n.toLocaleString('de-DE', { minimumFractionDigits: d, maximumFractionDigits: d }) + ' €';
+  }
+
+  go(page) {
+    this.setState({ page: page, formError: null });
+    window.scrollTo({ top: 0 });
+  }
+
+  setCart(cart) {
+    this.setState({ cart: cart });
+    try { window.localStorage.setItem('sustable_demo_cart_v1', JSON.stringify(cart)); } catch (e) {}
+  }
+
+  addQty(id, n) {
+    const cart = this.state.cart.slice();
+    const idx = cart.findIndex(it => it.id === id);
+    if (idx >= 0) { cart[idx] = Object.assign({}, cart[idx], { qty: cart[idx].qty + n }); }
+    else { cart.push({ id: id, qty: n }); }
+    this.setCart(cart);
+    this.showToast(n === 1 ? 'Zum Warenkorb hinzugefügt' : n + '× zum Warenkorb hinzugefügt');
+  }
+
+  showToast(text) {
+    clearTimeout(this._toastTimer);
+    this.setState({ toast: text });
+    this._toastTimer = setTimeout(() => this.setState({ toast: null }), 3500);
+  }
+
+  changeQty(id, delta) {
+    let cart = this.state.cart.map(it => it.id === id ? Object.assign({}, it, { qty: it.qty + delta }) : it);
+    cart = cart.filter(it => it.qty > 0);
+    this.setCart(cart);
+  }
+
+  haversine(a, b) {
+    const R = 6371, rad = Math.PI / 180;
+    const dLat = (b[0] - a[0]) * rad, dLng = (b[1] - a[1]) * rad;
+    const s = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * rad) * Math.cos(b[0] * rad) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(s));
+  }
+
+  mapRef = (el) => {
+    if (!el || el === this._mapEl) return;
+    this._mapEl = el;
+    const tryInit = () => {
+      if (!this._mapEl || !this._mapEl.isConnected) return;
+      if (!window.maplibregl) { setTimeout(tryInit, 150); return; }
+      const map = new window.maplibregl.Map({
+        container: el,
+        style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+        center: [9.2, 49.7],
+        zoom: 5.4,
+        attributionControl: { compact: true }
+      });
+      map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
+      this._map = map;
+      this._markers = {};
+      this.DEALERS.forEach(d => {
+        const popup = new window.maplibregl.Popup({ offset: 22, closeButton: false }).setHTML(
+          '<div style="font-family:Montserrat,sans-serif;font-size:13px;line-height:1.6"><b style="font-size:14px">' + d.name + '</b><br>' + d.strasse + '<br>' + d.ort + '</div>'
+        );
+        const m = new window.maplibregl.Marker({ color: '#111113' })
+          .setLngLat([d.lng, d.lat])
+          .setPopup(popup)
+          .addTo(map);
+        this._markers[d.id] = m;
+      });
+    };
+    tryInit();
+  };
+
+  showDealer(id) {
+    const d = this.DEALERS.find(x => x.id === id);
+    if (this._map && d) {
+      this._map.flyTo({ center: [d.lng, d.lat], zoom: 12.5, duration: 1400 });
+      Object.keys(this._markers || {}).forEach(k => {
+        const pop = this._markers[k].getPopup();
+        if (k === id) { if (pop && !pop.isOpen()) this._markers[k].togglePopup(); }
+        else { if (pop && pop.isOpen()) this._markers[k].togglePopup(); }
+      });
+    }
+  }
+
+  doSearch() {
+    const q = (this.state.searchQuery || '').trim().toLowerCase();
+    if (!q) { this.setState({ searchInfo: null, distances: null }); return; }
+    let coords = null;
+    if (this.CITIES[q]) coords = this.CITIES[q];
+    else {
+      const digits = q.replace(/[^0-9]/g, '');
+      if (digits.length >= 1 && this.PLZ_ZONES[digits[0]]) coords = this.PLZ_ZONES[digits[0]];
+    }
+    if (!coords) {
+      this.setState({ searchInfo: 'Ort nicht gefunden – bitte Stadt oder Postleitzahl eingeben.', distances: null });
+      return;
+    }
+    const distances = {};
+    let nearest = null;
+    this.DEALERS.forEach(d => {
+      const km = Math.round(this.haversine(coords, [d.lat, d.lng]));
+      distances[d.id] = km;
+      if (!nearest || km < distances[nearest]) nearest = d.id;
+    });
+    const nd = this.DEALERS.find(d => d.id === nearest);
+    this.setState({ searchInfo: 'Nächster Händler: ' + nd.name + ' (ca. ' + distances[nearest] + ' km entfernt)', distances: distances });
+    this.showDealer(nearest);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const CP = this.prod(s.calcProduct);
+    const SP = this.prod(s.selectedProduct);
+
+    const yieldKwh = Math.round(CP.kwp * this.SPEC_YIELD[s.region]);
+    const savings = yieldKwh * s.strompreis / 100;
+    const amortYears = CP.price / savings;
+
+    const cartItems = s.cart.map(it => {
+      const p = this.prod(it.id);
+      const line = it.qty * p.price;
+      return {
+        id: it.id, name: p.fullName, img: p.img, qty: it.qty,
+        priceFmt: this.fmtEur(p.price),
+        lineFmt: this.fmtEur(line),
+        inc: () => this.changeQty(it.id, 1),
+        dec: () => this.changeQty(it.id, -1),
+        remove: () => this.changeQty(it.id, -it.qty)
+      };
+    });
+    const cartCount = s.cart.reduce((a, it) => a + it.qty, 0);
+    const cartTotal = s.cart.reduce((a, it) => a + it.qty * this.prod(it.id).price, 0);
+
+    const shopProducts = this.PRODUCTS.map(p => Object.assign({}, p, {
+      priceFmt: this.fmtEur(p.price),
+      open: () => { this.setState({ selectedProduct: p.id }); this.go('produkt'); },
+      add: () => this.addQty(p.id, 1)
+    }));
+
+    const calcProducts = this.PRODUCTS.map(p => {
+      const active = s.calcProduct === p.id;
+      return {
+        id: p.id, label: p.shortLabel, wpText: p.wp + ' Wp',
+        style: 'flex: 1; cursor: pointer; text-align: center; padding: 13px 8px; border-radius: 14px; transition: all .15s; border: 1.5px solid ' + (active ? '#111113' : '#d2d2d7') + '; background: ' + (active ? '#111113' : '#ffffff') + '; color: ' + (active ? '#ffffff' : '#1d1d1f') + ';',
+        subStyle: 'font-size: 12px; margin-top: 2px; color: ' + (active ? 'rgba(255,255,255,0.7)' : '#86868b') + ';',
+        select: () => this.setState({ calcProduct: p.id })
+      };
+    });
+
+    const blogList = this.BLOG_POSTS.map((p, i) => Object.assign({}, p, {
+      featured: i === 0,
+      open: () => { this.setState({ blogPost: p.id }); this.go('blog'); }
+    }));
+    const post = s.blogPost ? this.BLOG_POSTS.find(p => p.id === s.blogPost) : null;
+
+    const dealers = this.DEALERS.map(d => Object.assign({}, d, {
+      hasZeiten: !!d.zeiten1,
+      hasDist: !!(s.distances && s.distances[d.id] !== undefined),
+      distText: s.distances ? 'ca. ' + s.distances[d.id] + ' km' : '',
+      show: () => this.showDealer(d.id)
+    }));
+
+    const faqGroups = this.FAQS.map(g => ({
+      cat: g.cat,
+      items: g.items.map(it => ({
+        q: it.q, a: it.a,
+        isOpen: s.openFaq === it.k,
+        symbol: s.openFaq === it.k ? '−' : '+',
+        toggle: () => this.setState({ openFaq: this.state.openFaq === it.k ? null : it.k })
+      }))
+    }));
+
+    const f = s.fields;
+    const stepLabels = { 1: 'Schritt 1 von 3 · Lieferadresse', 2: 'Schritt 2 von 3 · Zahlungsart', 3: 'Schritt 3 von 3 · Übersicht' };
+    const payLabels = { ueberweisung: 'Vorkasse / Überweisung', paypal: 'PayPal', kreditkarte: 'Kreditkarte' };
+
+    return {
+      goHome: () => this.go('home'),
+      goShop: () => this.go('shop'),
+      goCart: () => this.go('warenkorb'),
+      goCheckout: () => { this.setState({ checkoutStep: 1, ordered: false }); this.go('checkout'); },
+      goHaendler: () => this.go('haendler'),
+      goBusiness: () => this.go('business'),
+      goBlog: () => { this.setState({ blogPost: null }); this.go('blog'); },
+      goAbout: () => this.go('about'),
+      goMehr: () => this.go('mehr'),
+      goFaq: () => this.go('faq'),
+      goProduktId: (id) => { this.setState({ selectedProduct: id }); this.go('produkt'); },
+      goRechner: () => {
+        const scroll = () => {
+          const el = document.getElementById('rechner');
+          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+        };
+        if (s.page !== 'home') { this.go('home'); setTimeout(scroll, 120); } else { scroll(); }
+      },
+      isHome: s.page === 'home',
+      isShop: s.page === 'shop',
+      isProdukt: s.page === 'produkt',
+      isCart: s.page === 'warenkorb',
+      isCheckout: s.page === 'checkout',
+      isHaendler: s.page === 'haendler',
+      isBusiness: s.page === 'business',
+      isBlog: s.page === 'blog',
+      isAbout: s.page === 'about',
+      isMehr: s.page === 'mehr',
+      isFaq: s.page === 'faq',
+      blogListView: s.page === 'blog' && !post,
+      blogPostView: s.page === 'blog' && !!post,
+      blogFeatured: blogList[0],
+      blogRest: blogList.slice(1),
+      postTitle: post ? post.title : '',
+      postDate: post ? post.date : '',
+      postCat: post ? post.cat : '',
+      postImg: post ? post.img : '',
+      postBody: post ? post.body : [],
+      goBlogList: () => this.setState({ blogPost: null }),
+
+      strompreis: s.strompreis,
+      onStrompreis: (e) => this.setState({ strompreis: parseInt(e.target.value, 10) }),
+      region: s.region,
+      onRegion: (e) => this.setState({ region: e.target.value }),
+      calcProducts: calcProducts,
+      calcNote: 'Berechnung auf Basis des ' + CP.name + ' mit ' + CP.wp + ' Wp-Solarmodul, optimal geneigt um 25°. Richtwerte bei vollständiger Eigennutzung des erzeugten Stroms.',
+      ertragFmt: yieldKwh.toLocaleString('de-DE') + ' kWh',
+      ersparnisFmt: this.fmtEur(savings),
+      ersparnis25Fmt: this.fmtEur(savings * 25),
+      amortFmt: amortYears.toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' Jahre',
+
+      cartCount: cartCount,
+      cartTotalFmt: this.fmtEur(cartTotal, 2),
+      cartItems: cartItems,
+      cartEmpty: cartCount === 0,
+      cartHasItems: cartCount > 0,
+      addToCart: () => this.addQty('one-plus', 1),
+      shopProducts: shopProducts,
+      goProdukt: () => { this.setState({ selectedProduct: 'one-plus' }); this.go('produkt'); },
+      pName: SP.fullName,
+      pPriceFmt: this.fmtEur(SP.price),
+      pImg: SP.img,
+      pDesc: SP.desc,
+      pWpLine: SP.wp + ' Wp-Solarmodul, 500 W-Wechselrichter',
+      pWp: SP.wp + ' Wp',
+      pMaterial: SP.material,
+      pMasse: SP.masse,
+      qty: s.qty,
+      incQty: () => this.setState({ qty: Math.min(9, s.qty + 1) }),
+      decQty: () => this.setState({ qty: Math.max(1, s.qty - 1) }),
+      addToCartQty: () => { this.addQty(SP.id, s.qty); this.setState({ qty: 1 }); },
+
+      searchQuery: s.searchQuery,
+      onSearchQuery: (e) => this.setState({ searchQuery: e.target.value }),
+      onSearchKey: (e) => { if (e.key === 'Enter') this.doSearch(); },
+      onSearchSubmit: () => this.doSearch(),
+      searchInfo: s.searchInfo,
+      hasSearchInfo: !!s.searchInfo,
+      dealers: dealers,
+      mapRef: this.mapRef,
+
+      faqGroups: faqGroups,
+
+      ordered: s.ordered,
+      notOrdered: !s.ordered,
+      orderNumber: s.orderNumber,
+      checkoutEmpty: cartCount === 0,
+      step1: cartCount > 0 && s.checkoutStep === 1,
+      step2: cartCount > 0 && s.checkoutStep === 2,
+      step3: cartCount > 0 && s.checkoutStep === 3,
+      stepLabel: stepLabels[s.checkoutStep],
+      progressStyle: { width: (s.checkoutStep * 33.34) + '%', height: '100%', background: '#111113', borderRadius: '980px', transition: 'width 0.3s' },
+      onField: (e) => this.setState({ fields: Object.assign({}, this.state.fields, { [e.target.name]: e.target.value }), formError: null }),
+      fVorname: f.vorname, fNachname: f.nachname, fEmail: f.email, fStrasse: f.strasse, fPlz: f.plz, fOrt: f.ort,
+      hasFormError: !!s.formError,
+      formError: s.formError,
+      toStep1: () => this.setState({ checkoutStep: 1 }),
+      toStep2: () => {
+        if (s.checkoutStep === 1) {
+          const missing = !f.vorname || !f.nachname || !f.email || !f.strasse || !f.plz || !f.ort;
+          if (missing) { this.setState({ formError: 'Bitte fülle alle Pflichtfelder aus.' }); return; }
+        }
+        this.setState({ checkoutStep: 2 }); window.scrollTo({ top: 0 });
+      },
+      toStep3: () => { this.setState({ checkoutStep: 3 }); window.scrollTo({ top: 0 }); },
+      payUeberweisung: s.payment === 'ueberweisung',
+      payPaypal: s.payment === 'paypal',
+      payKreditkarte: s.payment === 'kreditkarte',
+      onPayment: (e) => this.setState({ payment: e.target.value }),
+      paymentLabel: payLabels[s.payment],
+      placeOrder: () => {
+        const num = 'SU-2026-' + Math.floor(1000 + Math.random() * 9000);
+        this.setState({ ordered: true, orderNumber: num });
+        this.setCart([]);
+        window.scrollTo({ top: 0 });
+      },
+
+      toastVisible: !!s.toast,
+      toastText: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
