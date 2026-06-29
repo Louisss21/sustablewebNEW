@@ -1,0 +1,123 @@
+html, body { margin: 0; padding: 0; background: #ffffff; }
+body { font-family: Montserrat, Helvetica, Arial, sans-serif; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+a { text-decoration: none; }
+input, select, button, textarea { font-family: Montserrat, sans-serif; }
+.maplibregl-popup-content { font-family: Montserrat, sans-serif; border-radius: 14px; padding: 14px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
+.maplibregl-ctrl-group { border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.10); }
+
+/* FAQ <details> als Akkordeon (Inhalt bleibt im DOM = crawlbar) */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .faq-plus { transform: rotate(45deg); }
+.faq-plus { transition: transform .15s; }
+
+/* Mobiles Menü */
+.menu-btn { display: none; }
+.mobile-menu { display: none; }
+body.menu-open .mobile-menu { display: flex; }
+
+@media (min-width: 1001px) {
+  .mobile-menu { display: none !important; }
+  .menu-btn { display: none !important; }
+}
+
+/* ===== Tablet (<= 1000px) ===== */
+@media (max-width: 1000px) {
+  .desktop-nav { display: none !important; }
+  .menu-btn { display: inline-flex !important; }
+  .grid3 { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ===== Handy (<= 760px) ===== */
+@media (max-width: 760px) {
+  .grid2, .grid3 { grid-template-columns: 1fr !important; }
+  .header-inner { padding: 10px 18px !important; gap: 12px !important; }
+  main section:not(.hero) { padding-top: 60px !important; padding-bottom: 60px !important; padding-left: 20px !important; padding-right: 20px !important; }
+  h1 { font-size: 34px !important; line-height: 1.15 !important; }
+  h2 { font-size: 27px !important; }
+  .hero { min-height: 0 !important; background-image: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.80)), url('/assets/hero-v5.png') !important; background-position: center !important; }
+  .hero-inner { padding: 56px 20px 64px !important; }
+  .hero h1 { font-size: 34px !important; }
+  .hero p { font-size: 17px !important; }
+  .calc-pad { padding: 30px !important; }
+  .calc-stats { gap: 12px !important; }
+  .calc-big { font-size: 44px !important; }
+  .form-grid { grid-template-columns: 1fr !important; }
+  .cart-row { flex-wrap: wrap !important; gap: 12px 14px !important; }
+  .cart-name { flex: 1 1 140px !important; }
+  .mehr-flex { gap: 48px !important; }
+  .pd-img { height: 320px !important; }
+}
+
+/* ===== Klein (<= 480px) ===== */
+@media (max-width: 480px) {
+  h1, .hero h1 { font-size: 28px !important; }
+  .cart-price { display: none !important; }
+  .calc-stats { grid-template-columns: 1fr !important; text-align: left; }
+  .stack-sm { flex-direction: column !important; align-items: stretch !important; }
+  .stack-sm > a { justify-content: center !important; }
+}
+
+/* ============================================================
+   HTML5-Effekte (Progressive Enhancement)
+   ============================================================ */
+
+/* Sanftes Scrollen + Offset für klebrigen Header (#rechner etc.) */
+html { scroll-behavior: smooth; }
+:target, #rechner, main section { scroll-margin-top: 90px; }
+
+/* Header-Elevation beim Scrollen */
+header { transition: box-shadow .3s ease, background .3s ease; }
+header.scrolled { box-shadow: 0 6px 28px rgba(0,0,0,0.08); background: rgba(255,255,255,0.96) !important; }
+
+/* Scroll-Fortschrittsbalken */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1200;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, #e8821d, #ffb454);
+  will-change: transform;
+}
+
+/* Hover-Mikrointeraktionen */
+[style*="border-radius:980px"], [style*="border-radius: 980px"] { transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease; }
+a[style*="border-radius:980px"]:hover, button[style*="border-radius:980px"]:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.14); }
+.desktop-nav a { transition: color .15s ease; }
+.desktop-nav a:hover { color: #86868b; }
+footer a { transition: color .15s ease; }
+footer a:hover { color: #1d1d1f; }
+
+/* Karten-Lift + Bildzoom (nur bei klar kartigen 3er-Grids) */
+.grid3 > div, .grid3 > a { transition: transform .25s ease, box-shadow .25s ease; }
+.grid3 > div:hover, .grid3 > a:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(0,0,0,0.10); }
+.grid2 img, .grid3 img { transition: transform .5s ease; }
+.grid3 > a:hover img, .grid3 > div:hover img { transform: scale(1.04); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll-Reveal: Ausgangszustand nur, wenn JS die Klasse .fx setzt */
+  .fx .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1); will-change: opacity, transform; }
+  .fx .reveal.in { opacity: 1; transform: none; }
+
+  /* Hero-Entrance (CSS-only, gestaffelt) */
+  .hero h1 { animation: heroIn .9s cubic-bezier(.22,.61,.36,1) both; }
+  .hero p { animation: heroIn .9s cubic-bezier(.22,.61,.36,1) .12s both; }
+  .hero .stack-sm { animation: heroIn .9s cubic-bezier(.22,.61,.36,1) .24s both; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  /* Shimmer auf dem orangen Wort */
+  .shimmer {
+    background: linear-gradient(100deg, #e8821d 0%, #ffc684 45%, #e8821d 60%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: shimmer 4.5s linear infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 140% 0; } 100% { background-position: -40% 0; } }
+}
+
+/* Reduced Motion: keinerlei Bewegung, alles sichtbar */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  #scroll-progress { display: none; }
+}

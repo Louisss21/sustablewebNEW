@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sustable Händler in deiner Nähe – Solartisch live erleben</title>
+<meta name="description" content="Erlebe den Sustable ONE+ live bei unseren Fachhändlern in Koblenz und Memmingen. Finde einen Händler in deiner Nähe.">
+<link rel="canonical" href="https://sustable.eu/haendlersuche/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sustable">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Sustable Händler in deiner Nähe – Solartisch live erleben">
+<meta property="og:description" content="Erlebe den Sustable ONE+ live bei unseren Fachhändlern in Koblenz und Memmingen. Finde einen Händler in deiner Nähe.">
+<meta property="og:url" content="https://sustable.eu/haendlersuche/">
+<meta property="og:image" content="https://sustable.eu/assets/hero-v5.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sustable Händler in deiner Nähe – Solartisch live erleben">
+<meta name="twitter:description" content="Erlebe den Sustable ONE+ live bei unseren Fachhändlern in Koblenz und Memmingen. Finde einen Händler in deiner Nähe.">
+<meta name="twitter:image" content="https://sustable.eu/assets/hero-v5.png">
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://sustable.eu/"},{"@type":"ListItem","position":2,"name":"Händlersuche","item":"https://sustable.eu/haendlersuche/"}]}</script>
+</head>
+<body data-page="haendler" style="min-height:100vh; display:flex; flex-direction:column; background:#ffffff;">
+<header style="position:sticky; top:0; z-index:1000; background:rgba(255,255,255,0.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid #e8e8ed;">
+  <div class="header-inner" style="max-width:1280px; margin:0 auto; padding:12px 32px; display:flex; align-items:center; gap:24px;">
+    <a href="/" aria-label="Sustable Startseite" style="cursor:pointer; display:flex; align-items:center; flex-shrink:0;"><img src="/assets/logo.png" alt="Sustable Logo" width="120" height="36" style="height:36px; width:auto; display:block;"></a>
+    <nav class="desktop-nav" aria-label="Hauptnavigation" style="flex:1; display:flex; align-items:center; justify-content:center; gap:32px; font-size:14.5px; font-weight:500;"><a href="/ueber-uns/" style="color:#1d1d1f; cursor:pointer;">Über uns</a><a href="/mehr-erfahren/" style="color:#1d1d1f; cursor:pointer;">Mehr erfahren</a><a href="/blog/" style="color:#1d1d1f; cursor:pointer;">Blog</a><a href="/business/" style="color:#1d1d1f; cursor:pointer;">Business</a><a href="/haendlersuche/" aria-current="page" style="color:#1d1d1f; cursor:pointer;">Händlersuche</a><a href="/faq/" style="color:#1d1d1f; cursor:pointer;">FAQ</a></nav>
+    <div style="display:flex; align-items:center; gap:12px; flex-shrink:0; margin-left:auto;">
+      <a href="/warenkorb/" aria-label="Warenkorb" style="cursor:pointer; display:flex; align-items:center; gap:9px; background:#f5f5f7; border-radius:980px; padding:9px 17px; color:#1d1d1f; font-weight:600; font-size:14px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="20" r="1.5"></circle><circle cx="17.5" cy="20" r="1.5"></circle><path d="M3 4h2l2.4 11h10.2L20 7H6.6"></path></svg>
+        <span id="cart-count">0</span><span id="cart-total" class="cart-price" style="color:#86868b; font-weight:500;">0,00 €</span>
+      </a>
+      <a href="/shop/" class="shop-btn" style="cursor:pointer; display:flex; align-items:center; gap:8px; background:#111113; color:#ffffff; border-radius:980px; padding:10px 22px; font-weight:600; font-size:14.5px;">Shop <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11"></path><path d="M9 4l4 4-4 4"></path></svg></a>
+      <button id="menu-btn" class="menu-btn" aria-label="Menü öffnen" aria-expanded="false" style="cursor:pointer; align-items:center; justify-content:center; width:42px; height:42px; background:#f5f5f7; border:0; border-radius:12px; flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"></path><path d="M3 12h18"></path><path d="M3 18h18"></path></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" aria-label="Mobile Navigation" style="flex-direction:column; padding:6px 18px 14px; background:rgba(255,255,255,0.98);"><a href="/ueber-uns/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Über uns</a><a href="/mehr-erfahren/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Mehr erfahren</a><a href="/blog/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Blog</a><a href="/business/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Business</a><a href="/haendlersuche/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Händlersuche</a><a href="/faq/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">FAQ</a><a href="/shop/" style="padding:15px 6px; font-size:16.5px; font-weight:600; color:#1d1d1f; border-bottom:1px solid #f0f0f2; cursor:pointer;">Shop</a></nav>
+</header>
+<main style="flex:1;">
+<div style="background:#f5f5f7; padding:80px 32px 110px; min-height:70vh;"><div style="max-width:1180px; margin:0 auto;"><div style="text-align:center; margin-bottom:44px;"><div style="color:#86868b; font-weight:600; font-size:13px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px;">Händlersuche</div><h1 style="margin:0 0 16px; font-size:46px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">Sustable Händler finden.</h1><p style="margin:0; font-size:17px; color:#6e6e73;">Gib deine Stadt oder Postleitzahl ein und finde den nächsten Sustable-Fachhändler.</p></div><div style="display:flex; gap:12px; max-width:600px; margin:0 auto 18px;"><input type="text" id="search-input" placeholder="Stadt oder Postleitzahl eingeben" aria-label="Stadt oder Postleitzahl" style="flex:1; padding:14px 22px; font-size:15.5px; border:1px solid #d2d2d7; border-radius:980px; background:#ffffff; color:#1d1d1f; outline:none;"><button type="button" id="search-submit" style="cursor:pointer; display:inline-flex; align-items:center; background:#111113; color:#ffffff; border:0; border-radius:980px; padding:14px 30px; font-weight:600; font-size:15px;">Suchen</button></div><div id="search-info" style="text-align:center; margin-bottom:24px; font-size:14.5px; font-weight:600; color:#1d1d1f; min-height:18px;"></div><div class="grid2" style="display:grid; grid-template-columns:1.4fr 1fr; gap:22px; align-items:start; margin-top:28px;"><div id="map" style="height:540px; border-radius:22px; overflow:hidden; background:#e8e8ed;"></div><div style="display:flex; flex-direction:column; gap:16px;"><div style="background:#ffffff; border-radius:20px; padding:28px;"><div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:4px;"><h2 style="margin:0; font-size:18px; font-weight:700; color:#1d1d1f;">BÜRO-CREATIV GmbH</h2><span class="dealer-dist" data-dealer-dist="creativ" style="font-size:13.5px; font-weight:700; color:#e8821d; white-space:nowrap;"></span></div><div style="font-size:13.5px; color:#86868b; margin-bottom:14px;">Fachhändler · Koblenz</div><address style="font-style:normal; font-size:14.5px; line-height:1.7; color:#424245; margin-bottom:8px;">Schönbornsluster Straße 53<br>56070 Koblenz</address><div style="font-size:14.5px; line-height:1.8; color:#424245; margin-bottom:6px;">Tel. <a href="tel:+49261579780" style="color:#1d1d1f; font-weight:600;">+49 261 579780</a><br><a href="mailto:info@buero-creativ.de" style="color:#1d1d1f; font-weight:600; text-decoration:underline;">info@buero-creativ.de</a></div><div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;"><button type="button" data-dealer-show="creativ" style="cursor:pointer; display:inline-flex; align-items:center; background:#111113; color:#ffffff; border:0; border-radius:980px; padding:9px 18px; font-weight:600; font-size:13.5px;">Auf Karte zeigen</button><a href="https://www.google.com/maps/dir/?api=1&destination=Sch%C3%B6nbornsluster%20Stra%C3%9Fe%2053%2C%2056070%20Koblenz" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; background:transparent; color:#1d1d1f; border:1.5px solid #c7c7cc; border-radius:980px; padding:8px 17px; font-weight:600; font-size:13.5px;">Route planen</a></div></div><div style="background:#ffffff; border-radius:20px; padding:28px;"><div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:4px;"><h2 style="margin:0; font-size:18px; font-weight:700; color:#1d1d1f;">Möbel Wassermann</h2><span class="dealer-dist" data-dealer-dist="wassermann" style="font-size:13.5px; font-weight:700; color:#e8821d; white-space:nowrap;"></span></div><div style="font-size:13.5px; color:#86868b; margin-bottom:14px;">Interliving · Memmingen</div><address style="font-style:normal; font-size:14.5px; line-height:1.7; color:#424245; margin-bottom:8px;">Mittereschweg 2<br>87700 Memmingen</address><div style="font-size:14.5px; line-height:1.8; color:#424245; margin-bottom:6px;">Tel. <a href="tel:+49833197670" style="color:#1d1d1f; font-weight:600;">+49 8331 97670</a><br><a href="mailto:info@moebel-wassermann.de" style="color:#1d1d1f; font-weight:600; text-decoration:underline;">info@moebel-wassermann.de</a></div><div style="font-size:13.5px; line-height:1.7; color:#424245; background:#f5f5f7; border-radius:12px; padding:10px 14px; margin:10px 0 4px;"><span style="font-weight:600;">Öffnungszeiten</span><br>Mo–Fr: 10:00–18:30 Uhr<br>Sa: 09:00–18:00 Uhr</div><div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;"><button type="button" data-dealer-show="wassermann" style="cursor:pointer; display:inline-flex; align-items:center; background:#111113; color:#ffffff; border:0; border-radius:980px; padding:9px 18px; font-weight:600; font-size:13.5px;">Auf Karte zeigen</button><a href="https://www.google.com/maps/dir/?api=1&destination=Mittereschweg%202%2C%2087700%20Memmingen" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; background:transparent; color:#1d1d1f; border:1.5px solid #c7c7cc; border-radius:980px; padding:8px 17px; font-weight:600; font-size:13.5px;">Route planen</a></div></div><div style="font-size:13px; color:#86868b; line-height:1.6; padding:0 6px;">Du bist Händler und möchtest Sustable in dein Sortiment aufnehmen? <a href="/business/" style="color:#1d1d1f; font-weight:600; text-decoration:underline;">Werde Partner →</a></div></div></div></div></div>
+</main>
+<div id="toast-root"></div>
+<footer style="background:#ffffff; border-top:1px solid #e8e8ed; padding:56px 32px 36px; position:relative; z-index:2;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; margin-bottom:34px;">
+      <div style="display:flex; align-items:center;"><img src="/assets/logo.png" alt="Sustable" width="107" height="32" style="height:32px; width:auto;"></div>
+      <nav aria-label="Footer-Navigation" style="display:flex; gap:26px; font-size:13.5px; font-weight:500; flex-wrap:wrap;">
+        <a href="/shop/" style="color:#424245;">Shop</a>
+        <a href="/haendlersuche/" style="color:#424245;">Händlersuche</a>
+        <a href="/business/" style="color:#424245;">Business</a>
+        <a href="/blog/" style="color:#424245;">Blog</a>
+        <a href="/faq/" style="color:#424245;">FAQ</a>
+        <a href="/impressum/" style="color:#424245;">Impressum</a>
+        <a href="/datenschutz/" style="color:#424245;">Datenschutz</a>
+        <a href="/widerrufsbelehrung/" style="color:#424245;">Widerrufsbelehrung</a>
+        <a href="/agb/" style="color:#424245;">AGB</a>
+      </nav>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; border-top:1px solid #f0f0f2; padding-top:26px;">
+      <div style="font-size:13px; color:#86868b;">© 2026 Sustable powered by e-con</div>
+      <div style="display:flex; gap:18px; font-size:13px; font-weight:600;">
+        <a href="https://www.linkedin.com/company/sustable-poweredbyecon" target="_blank" rel="noopener" style="color:#424245;">LinkedIn</a>
+        <a href="https://www.instagram.com/sustable.eu/" target="_blank" rel="noopener" style="color:#424245;">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="/app.js" defer></script>
+<script src="/effects.js" defer></script>
+</body>
+</html>

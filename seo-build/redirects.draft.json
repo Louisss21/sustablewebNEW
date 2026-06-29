@@ -1,0 +1,17 @@
+{
+  "_HINWEIS": "ENTWURF – NICHT automatisch deployen. Erst beim Domain-Umzug auf sustable.eu in vercel.json einfügen (Schlüssel 'redirects'), damit die rankenden alten WordPress-URLs per 301 auf die neuen Seiten zeigen. Mit Louis abstimmen. Die alten Slugs/Datums-URLs ggf. aus der Google Search Console / Sitemap der alten Seite ergänzen.",
+  "redirects": [
+    { "source": "/produkt/sustable-one-edelstahl-gebuerstet-kopie-kopie", "destination": "/produkt/solartisch-sustable-one-edelstahl/", "permanent": true },
+    { "source": "/produkt/sustable-one-edelstahl-gebuerstet-kopie-kopie/", "destination": "/produkt/solartisch-sustable-one-edelstahl/", "permanent": true },
+    { "source": "/b2b", "destination": "/business/", "permanent": true },
+    { "source": "/b2b/", "destination": "/business/", "permanent": true },
+    { "source": "/datenschutzerklaerung", "destination": "/datenschutz/", "permanent": true },
+    { "source": "/datenschutzerklaerung/", "destination": "/datenschutz/", "permanent": true }
+
+  ],
+  "_TODO": [
+    "Alte datumsbasierte Blog-URLs (z. B. /2025/09/02/<slug>/) auf die neuen /blog/<slug>/ mappen.",
+    "Falls alte Produkt-Slugs existieren (ONE, mini), ebenfalls auf /produkt/<neuer-slug>/ umleiten.",
+    "Identische Pfade (z. B. /faq/, /blog/, /ueber-uns/) brauchen KEINEN Redirect – nur abweichende Slugs."
+  ]
+}

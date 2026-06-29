@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /warenkorb/
+Disallow: /checkout/
+
+Sitemap: https://sustable.eu/sitemap.xml
