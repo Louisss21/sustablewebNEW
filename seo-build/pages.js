@@ -34,7 +34,6 @@ function pageHome(){
   +     '</div>'
   +   '</div>'
   + '</section>'
-  + founderTeaser()
   + '<section id="rechner" style="background:#f5f5f7; padding:100px 32px;">'
   +   '<div style="max-width:1180px; margin:0 auto;">'
   +     '<div style="text-align:center; margin-bottom:54px;"><div style="color:#86868b; font-weight:600; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Geist Mono\',\'Geist\',monospace; margin-bottom:14px;">Rechner</div><h2 style="margin:0; font-size:42px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">Deine mögliche Ersparnis.</h2></div>'
@@ -70,6 +69,7 @@ function pageHome(){
   +     benefit('<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path>','10 Jahre Garantie','Hochwertige Materialien und deutsche Qualität für langfristige Zuverlässigkeit.')
   +     benefit('<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H7v-2a2 2 0 0 0-4 0Z"></path><path d="M5 18v2"></path><path d="M19 18v2"></path>','Design &amp; Komfort','Genieße vollen Gartentisch-Komfort und modernes Design trotz integrierter Solartechnik.')
   +   '</div></div></section>'
+  + founderTeaser()
   + productTeaser()
   + appSection()
   + dealerTeaser()
