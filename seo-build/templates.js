@@ -170,6 +170,7 @@ function doc(o, bodyHtml){
   if (o.maplibre) scripts += '<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></' + 'script>\n';
   scripts += '<script src="/app.js" defer></' + 'script>\n';
   scripts += '<script src="/effects.js" defer></' + 'script>\n';
+  scripts += '<script src="/guide.js" defer></' + 'script>\n';
   return '<!DOCTYPE html>\n<html lang="de">\n<head>\n' + head(o) + '</head>\n'
     + '<body data-page="' + (o.page||'') + '" style="min-height:100vh; display:flex; flex-direction:column; background:#ffffff;">\n'
     + header(o.page) + '\n<main style="flex:1;">\n' + bodyHtml + '\n</main>\n'

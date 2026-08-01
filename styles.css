@@ -126,3 +126,26 @@ footer a:hover { color: #1d1d1f; }
 .mono { font-family: 'Geist Mono', 'Geist', monospace; }
 .logo:hover .s-dot { opacity:.7; }
 h1,h2 { letter-spacing: -0.03em; }
+
+/* ===== Avatar-Guide (Louis & Nils) ===== */
+.guide { position: fixed; left: 20px; bottom: 20px; z-index: 1500; display: flex; align-items: flex-end; gap: 12px; max-width: 360px; opacity: 0; transform: translateY(18px) scale(.98); pointer-events: none; transition: opacity .45s cubic-bezier(.22,.61,.36,1), transform .45s cubic-bezier(.22,.61,.36,1); }
+.guide.show { opacity: 1; transform: none; pointer-events: auto; }
+.guide-av { width: 62px; height: 62px; border-radius: 50%; background: #f5f5f7; object-fit: cover; flex-shrink: 0; box-shadow: 0 6px 18px rgba(0,0,0,.16); cursor: pointer; }
+.guide-bubble { position: relative; background: #ffffff; border-radius: 18px; padding: 13px 30px 12px 16px; box-shadow: 0 14px 40px rgba(0,0,0,.17); }
+.guide-bubble::before { content: ""; position: absolute; left: -7px; bottom: 16px; width: 14px; height: 14px; background: #ffffff; transform: rotate(45deg); border-radius: 3px; box-shadow: -3px 3px 8px rgba(0,0,0,.05); }
+.guide-name { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #f07d00; margin-bottom: 4px; }
+.guide-text { font-size: 13.5px; line-height: 1.5; color: #1d1d1f; }
+.guide-hint { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #c7c7cc; margin-top: 8px; }
+.guide-x { position: absolute; top: 5px; right: 8px; border: 0; background: none; font-size: 17px; line-height: 1; color: #86868b; cursor: pointer; padding: 2px; }
+.guide-x:hover { color: #1d1d1f; }
+.guide-av { animation: guideBob 3.2s ease-in-out infinite; }
+@keyframes guideBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@media (max-width: 620px) {
+  .guide { left: 12px; right: 12px; bottom: 12px; max-width: none; gap: 10px; }
+  .guide-av { width: 52px; height: 52px; }
+  .guide-text { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide { transition: opacity .2s; transform: none; }
+  .guide-av { animation: none; }
+}
