@@ -77,7 +77,7 @@ function pageHome(){
 }
 function productTeaser(){
   return '<section style="padding:100px 32px; background:#f5f5f7;"><div class="grid2" style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">'
-  + '<div style="background:#ffffff; border-radius:22px; padding:40px; display:flex; align-items:center; justify-content:center;"><img src="https://sustable.eu/wp-content/uploads/2025/10/One_1.avif" alt="Solartisch Sustable ONE+ aus gebürstetem Edelstahl" loading="lazy" style="max-width:100%; height:auto; display:block;"></div>'
+  + '<div style="border-radius:22px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.12);"><img src="/assets/produkt-terrasse.jpg" alt="Sustable Solartisch ONE+ auf einer Terrasse mit gedecktem Tisch" loading="lazy" style="width:100%; height:480px; object-fit:cover; display:block;"></div>'
   + '<div><div style="color:#86868b; font-weight:600; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Geist Mono\',\'Geist\',monospace; margin-bottom:14px;">Das Produkt</div><h2 style="margin:0 0 20px; font-size:38px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">Sustable ONE+ Edelstahl.</h2>'
   + '<p style="margin:0 0 26px; font-size:16px; line-height:1.7; color:#6e6e73;">Eleganter Solartisch aus gebürstetem Edelstahl mit integriertem 465 Wp-Solarmodul und 500 W-Wechselrichter. Mit versenkbaren Rollen mobil auf deiner Terrasse – die Gasdruckdämpfer neigen ihn in den perfekten Winkel von 25°.</p>'
   + '<div style="font-size:28px; font-weight:700; color:#1d1d1f; margin-bottom:30px;">1.750 €</div>'
