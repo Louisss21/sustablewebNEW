@@ -157,3 +157,36 @@ h1,h2 { letter-spacing: -0.03em; }
 .guide-launcher[hidden] { display: none; }
 @media (max-width: 620px) { .guide-launcher { left: 12px; bottom: 12px; width: 50px; height: 50px; } }
 @media (prefers-reduced-motion: reduce) { .guide-launcher { animation: none; } }
+
+/* ===== Guide: Sprechen & Center-Stage ===== */
+.guide-avwrap { position: relative; flex-shrink: 0; align-self: flex-end; }
+.guide-av { transform-origin: center bottom; }
+.guide.talking .guide-av { animation: guideTalk .18s ease-in-out infinite alternate; }
+@keyframes guideTalk { 0% { transform: scaleY(.975); } 100% { transform: scaleY(1.045) translateY(-1px); } }
+
+/* Sprech-Wellen-Indikator */
+.guide-wave { position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); display: none; gap: 2.5px; align-items: flex-end; height: 14px; padding: 3px 6px; background: #111113; border-radius: 9px; box-shadow: 0 3px 10px rgba(0,0,0,.22); }
+.guide.talking .guide-wave { display: flex; }
+.guide-wave i { width: 2.5px; height: 4px; background: #f07d00; border-radius: 2px; animation: guideWave .5s ease-in-out infinite; }
+.guide-wave i:nth-child(2) { animation-delay: .15s; }
+.guide-wave i:nth-child(3) { animation-delay: .3s; }
+@keyframes guideWave { 0%,100% { height: 4px; } 50% { height: 11px; } }
+
+/* Center-Stage */
+.guide-backdrop { position: fixed; inset: 0; background: rgba(10,10,12,.5); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); z-index: 1490; opacity: 0; pointer-events: none; transition: opacity .45s ease; }
+.guide-backdrop.show { opacity: 1; pointer-events: auto; }
+.guide.center { left: 50%; top: 50%; right: auto; bottom: auto; max-width: min(460px, 92vw); transform: translate(-50%, -46%) scale(.96); }
+.guide.center.show { transform: translate(-50%, -50%) scale(1); }
+.guide.center .guide-av { width: 96px; height: 96px; }
+.guide.center .guide-bubble { padding: 18px 34px 18px 20px; border-radius: 22px; }
+.guide.center .guide-text { font-size: 16px; line-height: 1.55; }
+.guide.center .guide-name { font-size: 11.5px; }
+@media (max-width: 620px) {
+  .guide.center .guide-av { width: 74px; height: 74px; }
+  .guide.center .guide-text { font-size: 14.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guide.talking .guide-av { animation: none; }
+  .guide-wave i { animation: none; height: 7px; }
+  .guide-backdrop { transition: none; }
+}
