@@ -34,6 +34,7 @@ function pageHome(){
   +     '</div>'
   +   '</div>'
   + '</section>'
+  + founderTeaser()
   + '<section id="rechner" style="background:#f5f5f7; padding:100px 32px;">'
   +   '<div style="max-width:1180px; margin:0 auto;">'
   +     '<div style="text-align:center; margin-bottom:54px;"><div style="color:#86868b; font-weight:600; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Geist Mono\',\'Geist\',monospace; margin-bottom:14px;">Rechner</div><h2 style="margin:0; font-size:42px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">Deine mögliche Ersparnis.</h2></div>'
@@ -73,7 +74,6 @@ function pageHome(){
   + appSection()
   + dealerTeaser()
   + manufactureSection()
-  + founderTeaser()
   + statementBand();
 }
 function productTeaser(){
