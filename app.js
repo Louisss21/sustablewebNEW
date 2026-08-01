@@ -241,7 +241,7 @@ function initHaendler(){
     _map.addControl(new window.maplibregl.NavigationControl({showCompass:false}), 'bottom-right');
     for (var i=0;i<DEALERS.length;i++){
       var d=DEALERS[i];
-      var popup = new window.maplibregl.Popup({offset:22, closeButton:false}).setHTML('<div style="font-family:Montserrat,sans-serif;font-size:13px;line-height:1.6"><b style="font-size:14px">'+d.name+'</b><br>'+d.strasse+'<br>'+d.ort+'</div>');
+      var popup = new window.maplibregl.Popup({offset:22, closeButton:false}).setHTML('<div style="font-family:Geist,sans-serif;font-size:13px;line-height:1.6"><b style="font-size:14px">'+d.name+'</b><br>'+d.strasse+'<br>'+d.ort+'</div>');
       _markers[d.id] = new window.maplibregl.Marker({color:'#111113'}).setLngLat([d.lng,d.lat]).setPopup(popup).addTo(_map);
     }
   }

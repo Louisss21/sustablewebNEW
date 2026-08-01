@@ -152,10 +152,10 @@ function head(o){
   s += '<meta name="twitter:title" content="' + esc(o.title) + '">\n';
   s += '<meta name="twitter:description" content="' + esc(o.description) + '">\n';
   s += '<meta name="twitter:image" content="' + img + '">\n';
-  s += '<link rel="icon" href="/assets/logo.png">\n';
+  s += '<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2724%27%20fill%3D%27%23000000%27/%3E%3Ccircle%20cx%3D%2750%27%20cy%3D%2750%27%20r%3D%2727%27%20fill%3D%27none%27%20stroke%3D%27%23ffffff%27%20stroke-width%3D%2712%27%20pathLength%3D%27360%27%20stroke-dasharray%3D%27136%2044%27%20stroke-dashoffset%3D%2768%27%20transform%3D%27rotate%2818%2050%2050%29%27/%3E%3C/svg%3E">\n';
   s += '<link rel="preconnect" href="https://fonts.googleapis.com">\n';
   s += '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">\n';
-  s += '<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n';
+  s += '<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">\n';
   if (o.maplibre) s += '<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">\n';
   s += '<link rel="stylesheet" href="/styles.css">\n';
   var ld = o.jsonld || [];
@@ -198,7 +198,7 @@ function header(active){
   return ''
   + '<header style="position:sticky; top:0; z-index:1000; background:rgba(255,255,255,0.88); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid #e8e8ed;">\n'
   + '  <div class="header-inner" style="max-width:1280px; margin:0 auto; padding:12px 32px; display:flex; align-items:center; gap:24px;">\n'
-  + '    <a href="/" aria-label="Sustable Startseite" style="cursor:pointer; display:flex; align-items:center; flex-shrink:0;"><img src="/assets/logo.png" alt="Sustable Logo" width="120" height="36" style="height:36px; width:auto; display:block;"></a>\n'
+  + '    <a href="/" class="logo" aria-label="Sustable — Where design meets sustainability" style="cursor:pointer; display:flex; align-items:center; gap:10px; flex-shrink:0; color:#0a0a0c;"><svg viewBox="0 0 100 100" width="30" height="30" fill="none" aria-hidden="true" style="flex-shrink:0;"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="13" pathLength="360" stroke-dasharray="136 44" stroke-dashoffset="68" transform="rotate(18 50 50)"/></svg><span style="font-weight:600; font-size:22px; letter-spacing:-0.03em; line-height:1; color:#0a0a0c;">sustable<span class="s-dot" style="color:#f07d00;">.</span></span></a>\n'
   + '    <nav class="desktop-nav" aria-label="Hauptnavigation" style="flex:1; display:flex; align-items:center; justify-content:center; gap:32px; font-size:14.5px; font-weight:500;">'+deskLinks+'</nav>\n'
   + '    <div style="display:flex; align-items:center; gap:12px; flex-shrink:0; margin-left:auto;">\n'
   + '      <a href="/warenkorb/" aria-label="Warenkorb" style="cursor:pointer; display:flex; align-items:center; gap:9px; background:#f5f5f7; border-radius:980px; padding:9px 17px; color:#1d1d1f; font-weight:600; font-size:14px;">\n'
@@ -221,7 +221,7 @@ function footer(){
   + '<footer style="background:#ffffff; border-top:1px solid #e8e8ed; padding:56px 32px 36px; position:relative; z-index:2;">\n'
   + '  <div style="max-width:1280px; margin:0 auto;">\n'
   + '    <div style="display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; margin-bottom:34px;">\n'
-  + '      <div style="display:flex; align-items:center;"><img src="/assets/logo.png" alt="Sustable" width="107" height="32" style="height:32px; width:auto;"></div>\n'
+  + '      <div style="display:flex; flex-direction:column; gap:8px;"><a href="/" class="logo" style="display:flex; align-items:center; gap:9px; color:#0a0a0c;"><svg viewBox="0 0 100 100" width="26" height="26" fill="none" aria-hidden="true" style="flex-shrink:0;"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="13" pathLength="360" stroke-dasharray="136 44" stroke-dashoffset="68" transform="rotate(18 50 50)"/></svg><span style="font-weight:600; font-size:19px; letter-spacing:-0.03em; line-height:1; color:#0a0a0c;">sustable<span class="s-dot" style="color:#f07d00;">.</span></span></a><span class="mono" style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#6e6e73;">Where design meets sustainability</span></div>\n'
   + '      <nav aria-label="Footer-Navigation" style="display:flex; gap:26px; font-size:13.5px; font-weight:500; flex-wrap:wrap;">\n'
   + '        <a href="/shop/" style="color:#424245;">Shop</a>\n'
   + '        <a href="/haendlersuche/" style="color:#424245;">Händlersuche</a>\n'

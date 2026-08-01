@@ -1,9 +1,9 @@
 html, body { margin: 0; padding: 0; background: #ffffff; }
-body { font-family: Montserrat, Helvetica, Arial, sans-serif; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+body { font-family: Geist, "Helvetica Neue", Arial, sans-serif; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
 * { box-sizing: border-box; }
 a { text-decoration: none; }
-input, select, button, textarea { font-family: Montserrat, sans-serif; }
-.maplibregl-popup-content { font-family: Montserrat, sans-serif; border-radius: 14px; padding: 14px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
+input, select, button, textarea { font-family: Geist, sans-serif; }
+.maplibregl-popup-content { font-family: Geist, sans-serif; border-radius: 14px; padding: 14px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.14); }
 .maplibregl-ctrl-group { border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.10); }
 
 /* FAQ <details> als Akkordeon (Inhalt bleibt im DOM = crawlbar) */
@@ -75,7 +75,7 @@ header.scrolled { box-shadow: 0 6px 28px rgba(0,0,0,0.08); background: rgba(255,
 #scroll-progress {
   position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1200;
   transform: scaleX(0); transform-origin: 0 50%;
-  background: linear-gradient(90deg, #e8821d, #ffb454);
+  background: linear-gradient(90deg, #f07d00, #ffb454);
   will-change: transform;
 }
 
@@ -106,7 +106,7 @@ footer a:hover { color: #1d1d1f; }
 
   /* Shimmer auf dem orangen Wort */
   .shimmer {
-    background: linear-gradient(100deg, #e8821d 0%, #ffc684 45%, #e8821d 60%);
+    background: linear-gradient(100deg, #f07d00 0%, #ffc684 45%, #f07d00 60%);
     background-size: 220% 100%;
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: transparent;
@@ -121,3 +121,8 @@ footer a:hover { color: #1d1d1f; }
   .reveal { opacity: 1 !important; transform: none !important; }
   #scroll-progress { display: none; }
 }
+
+/* ===== Brand V2 ===== */
+.mono { font-family: 'Geist Mono', 'Geist', monospace; }
+.logo:hover .s-dot { opacity:.7; }
+h1,h2 { letter-spacing: -0.03em; }
