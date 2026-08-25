@@ -1,10 +1,11 @@
 /* ============================================================
    Sustable – Avatar-Guide (Louis & Nils)
-   - Nachrichten poppen automatisch pro Abschnitt ([data-gd])
-   - "Sprechen": Typewriter-Text + Kinn-Squash + Sprech-Wellen
-   - Center-Stage: markierte Abschnitte ([data-gd-center]) rücken
-     den Avatar groß in die Bildmitte, dann zurück in die Ecke
-   - × klappt dauerhaft ein -> Launcher-Knopf klappt wieder aus
+   - Automatisch pro Abschnitt ([data-gd]); stört nicht (pointer-events)
+   - "Sprechen": Typewriter + Kinn-Squash + Sprech-Wellen
+   - lebendig: Atmen & gelegentliches Zwinkern (CSS)
+   - Center-Stage bei markierten Abschnitten ([data-gd-center])
+   - Interaktive Vorschläge ([data-gd-actions] = "Label|href;;Label|href")
+   - blendet nach dem Lesen automatisch aus; × klappt dauerhaft ein
    ============================================================ */
 (function(){
 "use strict";
@@ -26,11 +27,12 @@ ready(function(){
     '<span class="guide-avwrap"><img class="guide-av" alt="" width="62" height="62">' +
     '<span class="guide-wave" aria-hidden="true"><i></i><i></i><i></i></span></span>' +
     '<div class="guide-bubble"><button class="guide-x" aria-label="Guide einklappen" title="Einklappen">×</button>' +
-    '<div class="guide-name mono"></div><div class="guide-text"></div></div>';
+    '<div class="guide-name mono"></div><div class="guide-text"></div><div class="guide-actions"></div></div>';
   document.body.appendChild(el);
   var avEl = el.querySelector(".guide-av");
   var nameEl = el.querySelector(".guide-name");
   var textEl = el.querySelector(".guide-text");
+  var actEl = el.querySelector(".guide-actions");
 
   var backdrop = document.createElement("div");
   backdrop.className = "guide-backdrop";
@@ -45,7 +47,7 @@ ready(function(){
   document.body.appendChild(launcher);
   if (collapsed) launcher.hidden = false;
 
-  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null;
+  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null;
 
   function stopType(){ if(typeTimer){ clearTimeout(typeTimer); typeTimer=null; } el.classList.remove("talking"); }
   function typeOut(text){
@@ -63,11 +65,33 @@ ready(function(){
       } else { typeTimer=null; el.classList.remove("talking"); }
     })();
   }
+  function renderActions(str){
+    actEl.innerHTML = "";
+    if (!str) return;
+    var parts = str.split(";;");
+    for (var i=0;i<parts.length;i++){
+      var pv = parts[i].split("|");
+      if (pv.length<2) continue;
+      var a = document.createElement("a");
+      a.className = "guide-btn"; a.href = pv[1].trim(); a.textContent = pv[0].trim();
+      a.addEventListener("click", function(ev){ ev.stopPropagation(); });
+      actEl.appendChild(a);
+    }
+  }
   function show(){ el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
-  function setMessage(who, text){
+  function scheduleHide(text){
+    if (hideTimer) clearTimeout(hideTimer);
+    var t = Math.min(12000, 4000 + text.length*45);
+    hideTimer = setTimeout(function h(){
+      if (centerActive){ hideTimer = setTimeout(h, 1500); return; }
+      el.classList.remove("show"); stopType();
+    }, t);
+  }
+  function setMessage(who, text, actions){
     var a = AV[who] || AV.louis;
     avEl.src = a.img; nameEl.textContent = a.name; hasMsg = true;
-    if (!collapsed){ show(); typeOut(text); }
+    renderActions(actions);
+    if (!collapsed){ show(); typeOut(text); scheduleHide(text); }
   }
   function enterCenter(){
     centerActive = true;
@@ -86,10 +110,10 @@ ready(function(){
     lastEl = node;
     var who = node.getAttribute("data-gd-who");
     var text = node.getAttribute("data-gd");
-    setMessage(who, text);
+    setMessage(who, text, node.getAttribute("data-gd-actions"));
     if (node.getAttribute("data-gd-center")){
       enterCenter();
-      var dur = reduce ? 2600 : (2600 + text.length*26 + 1400);
+      var dur = reduce ? 2600 : (2800 + text.length*26 + 1500);
       centerTimer = setTimeout(exitCenter, dur);
     }
   }
@@ -97,13 +121,14 @@ ready(function(){
     collapsed = true;
     try { localStorage.setItem(STORE,"1"); } catch(e){}
     stopType(); exitCenter(); el.classList.remove("show"); launcher.hidden = false;
+    if (hideTimer) clearTimeout(hideTimer);
   }
   function expand(){
     collapsed = false;
     try { localStorage.removeItem(STORE); } catch(e){}
     launcher.hidden = true;
-    if (!hasMsg) setMessage("louis","Da bin ich wieder! Scroll einfach weiter – ich meld mich zu jedem Bereich.");
-    else { show(); }
+    if (!hasMsg) setMessage("louis","Da bin ich wieder! Ich meld mich, wenn's zu einem Bereich etwas zu sagen gibt.");
+    else { show(); scheduleHide(textEl.textContent||""); }
   }
   el.querySelector(".guide-x").addEventListener("click", function(ev){ ev.stopPropagation(); collapse(); });
   el.addEventListener("click", function(){ if (centerActive) exitCenter(); });

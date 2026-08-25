@@ -129,7 +129,8 @@ h1,h2 { letter-spacing: -0.03em; }
 
 /* ===== Avatar-Guide (Louis & Nils) ===== */
 .guide { position: fixed; left: 20px; bottom: 20px; z-index: 1500; display: flex; align-items: flex-end; gap: 12px; max-width: 360px; opacity: 0; transform: translateY(18px) scale(.98); pointer-events: none; transition: opacity .45s cubic-bezier(.22,.61,.36,1), transform .45s cubic-bezier(.22,.61,.36,1); }
-.guide.show { opacity: 1; transform: none; pointer-events: auto; }
+.guide.show { opacity: 1; transform: none; }
+.guide-bubble, .guide-av, .guide-x, .guide-btn { pointer-events: auto; }
 .guide-av { width: 62px; height: 62px; border-radius: 50%; background: #f5f5f7; object-fit: cover; flex-shrink: 0; box-shadow: 0 6px 18px rgba(0,0,0,.16); cursor: pointer; }
 .guide-bubble { position: relative; background: #ffffff; border-radius: 18px; padding: 13px 30px 12px 16px; box-shadow: 0 14px 40px rgba(0,0,0,.17); }
 .guide-bubble::before { content: ""; position: absolute; left: -7px; bottom: 16px; width: 14px; height: 14px; background: #ffffff; transform: rotate(45deg); border-radius: 3px; box-shadow: -3px 3px 8px rgba(0,0,0,.05); }
@@ -138,7 +139,7 @@ h1,h2 { letter-spacing: -0.03em; }
 .guide-hint { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: #c7c7cc; margin-top: 8px; }
 .guide-x { position: absolute; top: 5px; right: 8px; border: 0; background: none; font-size: 17px; line-height: 1; color: #86868b; cursor: pointer; padding: 2px; }
 .guide-x:hover { color: #1d1d1f; }
-.guide-av { animation: guideBob 3.2s ease-in-out infinite; }
+.guide-av { animation: guideBreathe 4.5s ease-in-out infinite, guideWink 8s ease-in-out infinite; }
 @keyframes guideBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @media (max-width: 620px) {
   .guide { left: 12px; right: 12px; bottom: 12px; max-width: none; gap: 10px; }
@@ -190,3 +191,14 @@ h1,h2 { letter-spacing: -0.03em; }
   .guide-wave i { animation: none; height: 7px; }
   .guide-backdrop { transition: none; }
 }
+
+
+/* Guide: lebendig + Vorschlags-Buttons */
+@keyframes guideBreathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+@keyframes guideWink { 0%,86%,100% { transform: rotate(0) scale(1); } 90% { transform: rotate(-7deg) scale(1.04); } 94% { transform: rotate(4deg) scale(1.02); } }
+.guide-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.guide-actions:empty { display: none; }
+.guide-btn { display: inline-flex; align-items: center; gap: 6px; background: #111113; color: #ffffff; border-radius: 980px; padding: 8px 15px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: transform .15s, background .15s; }
+.guide-btn:hover { transform: translateY(-1px); background: #2c2c2e; }
+.guide-btn::after { content: "→"; }
+@media (prefers-reduced-motion: reduce) { .guide-av { animation: none; } }
