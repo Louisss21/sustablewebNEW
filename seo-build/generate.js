@@ -25,7 +25,7 @@ routes.push({ out:'index.html', page:'home',
 var prodSeo = {
   'one-plus': { title:'Solartisch Sustable ONE+ Edelstahl – 465 Wp | Sustable', description:'Premium-Solartisch aus gebürstetem Edelstahl mit 465-Wp-Modul & 500-W-Wechselrichter. Plug & Play, mobil & kippbar, 10 Jahre Garantie. 1.750 €.' },
   'one': { title:'Solartisch Sustable ONE Aluminium – 465 Wp | Sustable', description:'Solartisch mit Aluminiumrahmen in Anthrazit und 465-Wp-Modul. Leicht, wetterfest, Plug & Play, 10 Jahre Garantie. Ab 1.490 €.' },
-  'mini': { title:'Solartisch Sustable mini – 315 Wp kompakt | Sustable', description:'Kompakter Solartisch mit 315-Wp-Modul – ideal für Balkon und kleine Terrassen. Plug & Play, Made in Germany. 1.190 €.' }
+  'mini': { title:'Solartisch Sustable mini – 315 Wp kompakt | Sustable', description:'Kompakter Solartisch mit 315-Wp-Modul – ideal für Balkon und kleine Terrassen. Plug & Play, Made in Germany. 1.500 €.' }
 };
 for (var pi=0; pi<PRODUCTS.length; pi++){
   var p = PRODUCTS[pi];

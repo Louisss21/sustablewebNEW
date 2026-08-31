@@ -12,7 +12,7 @@ var DEFAULT_OG_IMAGE = SITE_URL + "/assets/hero-v5.png"; // TODO: dediziertes 12
 var PRODUCTS = [
   { id:'one-plus', slug:'solartisch-sustable-one-edelstahl', name:'Sustable ONE+ Edelstahl', fullName:'Solartisch Sustable ONE+ Edelstahl', shortLabel:'ONE+', price:1750, wp:465, kwp:0.465, material:'Edelstahl, gebürstet', masse:'172 × 115 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_1.avif', badge:'465 Wp · Edelstahl', tagline:'Das Flaggschiff aus gebürstetem Edelstahl.', desc:'Eleganter Solartisch aus gebürstetem Edelstahl mit 465 Wp-Solarmodul und 500 W-Wechselrichter – für Balkon, Terrasse oder Garten.' },
   { id:'one', slug:'solartisch-sustable-one-aluminium', name:'Sustable ONE Aluminium', fullName:'Solartisch Sustable ONE Aluminium', shortLabel:'ONE', price:1490, wp:465, kwp:0.465, material:'Aluminium, anthrazit', masse:'172 × 115 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_7.avif', badge:'465 Wp · Aluminium', tagline:'Gleiche Leistung, leichter Aluminiumrahmen.', desc:'Solartisch mit pulverbeschichtetem Aluminiumrahmen in Anthrazit und 465 Wp-Solarmodul – leichter und besonders wetterbeständig.' },
-  { id:'mini', slug:'solartisch-sustable-mini', name:'Sustable mini', fullName:'Solartisch Sustable mini', shortLabel:'mini', price:1190, wp:315, kwp:0.315, material:'Aluminium, anthrazit', masse:'140 × 80 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_6.avif', badge:'315 Wp · kompakt', tagline:'Kompakt für Balkon und kleine Terrassen.', desc:'Der kompakte Solartisch mit 315 Wp-Modul – ideal für Balkon und kleinere Terrassen, mit identischer Plug-&-Play-Technik.' }
+  { id:'mini', slug:'solartisch-sustable-mini', name:'Sustable mini', fullName:'Solartisch Sustable mini', shortLabel:'mini', price:1500, wp:315, kwp:0.315, material:'Aluminium, anthrazit', masse:'140 × 80 × 75 cm', img:'/assets/mini-terrasse.jpg', badge:'315 Wp · kompakt', tagline:'Kompakt für Balkon und kleine Terrassen.', desc:'Der kompakte Solartisch mit 315 Wp-Modul – ideal für Balkon und kleinere Terrassen, mit identischer Plug-&-Play-Technik.' }
 ];
 function prod(id){ for (var i=0;i<PRODUCTS.length;i++){ if (PRODUCTS[i].id===id) return PRODUCTS[i]; } return PRODUCTS[0]; }
 function productPath(p){ return '/produkt/' + p.slug + '/'; }
@@ -47,7 +47,7 @@ var FAQS = [
     { k:'p3', q:'Wie lange hält das PV-Modul?', a:'Die Lebensdauer beträgt 25 Jahre und länger, wobei die Leistung nach 20 Jahren noch bei über ca. 90 % liegt.' }
   ]},
   { cat:'Kauf & Garantie', items:[
-    { k:'k1', q:'Wie viel kostet der Solartisch?', a:'Sustable ONE (Aluminium Anthrazit): ab 1.490 €. Sustable ONE+ (Edelstahl gebürstet): 1.750 €. Sustable mini (kompakt): 1.190 €.' },
+    { k:'k1', q:'Wie viel kostet der Solartisch?', a:'Sustable ONE (Aluminium Anthrazit): ab 1.490 €. Sustable ONE+ (Edelstahl gebürstet): 1.750 €. Sustable mini (kompakt): 1.500 €.' },
     { k:'k2', q:'Ist der Solartisch förderfähig und umsatzsteuerbefreit?', a:'Ja. Der Solartisch ist ein Tischkraftwerk und damit ein Kleinkraftwerk, das in den meisten deutschen Regionen förderfähig ist. Für die Lieferung von Solartischen mit integrierter Photovoltaikanlage unter 30 kWp zur Nutzung im häuslichen Umfeld gilt der Umsatzsteuersatz von 0 % gemäß § 12 Abs. 3 Nr. 1 UStG.' }
   ]}
 ];
