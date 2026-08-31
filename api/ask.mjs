@@ -7,8 +7,9 @@ Sustable baut Solartische: Gartentische mit integriertem Solarmodul, die per Ste
 Produkte & Preise:
 - Sustable ONE+ Edelstahl: 1.750 € · 465 Wp · gebürsteter Edelstahl · mit versenkbaren Rollen (Flaggschiff).
 - Sustable ONE Aluminium: ab 1.490 € · 465 Wp · Aluminium anthrazit.
-- Sustable mini: 1.500 € · 315 Wp · kompakt für Balkon/kleine Terrassen.
-Alle: 500 W Mikro-Wechselrichter integriert, Plug & Play, per Gasdruckdämpfer auf 25° kippbar, wetterfest für den Dauereinsatz, 10 Jahre Garantie, App-Monitoring des Ertrags.
+- Sustable mini: 1.500 € · 315 Wp · kompakt für Balkon/kleine Terrassen · 350 W Mikro-Wechselrichter · Maße 165 × 88 × 75 cm · ohne Rollen.
+ONE & ONE+ haben einen 500 W Mikro-Wechselrichter und versenkbare Rollen; der mini hat einen 350 W Mikro-Wechselrichter und keine Rollen.
+Alle: Plug & Play, per Gasdruckdämpfer auf 25° kippbar, wetterfest für den Dauereinsatz, 10 Jahre Garantie, App-Monitoring des Ertrags.
 
 Fakten:
 - Ertrag je nach Standort ca. 450–510 kWh pro Jahr.

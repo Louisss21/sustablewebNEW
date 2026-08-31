@@ -124,15 +124,15 @@ function pageProdukt(SP){
   + imgBlock
   + '<div><h1 data-gd="Das ist er im Detail. Ich bin Louis – frag mich einfach, wenn du was wissen willst." data-gd-who="louis" style="margin:0 0 14px; font-size:34px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">'+esc(SP.fullName)+'</h1><div style="font-size:30px; font-weight:700; color:#1d1d1f; margin-bottom:6px;">'+fmtEur(SP.price)+'</div><div style="font-size:13px; color:#86868b; margin-bottom:26px;">inkl. MwSt. · zzgl. Versand</div><p style="margin:0 0 26px; font-size:15px; line-height:1.7; color:#6e6e73;">'+esc(SP.desc)+'</p>'
   + '<ul style="margin:0 0 30px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14.5px; color:#1d1d1f;">'
-  + '<li style="display:flex; gap:12px; align-items:center;">'+check+SP.wp+' Wp-Solarmodul, 500 W-Wechselrichter</li>'
+  + '<li style="display:flex; gap:12px; align-items:center;">'+check+SP.wp+' Wp-Solarmodul, '+SP.inverter+' W-Wechselrichter</li>'
   + '<li style="display:flex; gap:12px; align-items:center;">'+check+'Per Gasdruckdämpfer neigbar in den optimalen 25°-Winkel</li>'
-  + '<li style="display:flex; gap:12px; align-items:center;">'+check+'Im Tischfuß versenkbare Rollen – mobil auf der Terrasse</li>'
+  + (SP.rollen ? '<li style="display:flex; gap:12px; align-items:center;">'+check+'Im Tischfuß versenkbare Rollen – mobil auf der Terrasse</li>' : '')
   + '<li style="display:flex; gap:12px; align-items:center;">'+check+'Wetterfest, Made in Germany, 10 Jahre Garantie</li></ul>'
   + '<div style="display:flex; gap:14px; align-items:stretch; margin-bottom:18px;"><div style="display:flex; align-items:center; border:1.5px solid #c7c7cc; border-radius:980px; overflow:hidden;"><button type="button" id="pd-dec" aria-label="Menge verringern" style="cursor:pointer; padding:12px 18px; font-size:18px; font-weight:600; color:#1d1d1f; background:none; border:0;">−</button><span id="pd-qty" style="min-width:36px; text-align:center; font-weight:700; font-size:16px;">1</span><button type="button" id="pd-inc" aria-label="Menge erhöhen" style="cursor:pointer; padding:12px 18px; font-size:18px; font-weight:600; color:#1d1d1f; background:none; border:0;">+</button></div>'
   + '<button type="button" data-add="'+SP.id+'" data-add-qty="pd-qty" style="cursor:pointer; flex:1; display:inline-flex; align-items:center; justify-content:center; gap:10px; background:#111113; color:#ffffff; border:0; border-radius:980px; padding:14px 28px; font-weight:600; font-size:16px;">In den Warenkorb</button></div>'
   + '<div style="font-size:13.5px; color:#424245; background:#f5f5f7; border-radius:14px; padding:14px 18px; line-height:1.6;"><span style="font-weight:700;">Plug &amp; Play:</span> Ansteckkabel in die Außensteckdose stecken und Strom direkt ins Haus einspeisen – ohne Installation.</div>'
   + '<div style="margin-top:36px;"><h2 data-gd="Alle Specs auf einen Blick – frag mich, wenn etwas unklar ist." data-gd-who="nils" style="margin:0 0 14px; font-size:18px; font-weight:700; color:#1d1d1f;">Technische Daten</h2><div style="display:grid; grid-template-columns:1fr 1fr; border-top:1px solid #e8e8ed; font-size:14px;">'
-  + techRow('Solarmodul', SP.wp+' Wp') + techRow('Wechselrichter','500 W') + techRow('Material', SP.material) + techRow('Maße', SP.masse) + techRow('Neigung','25° per Gasdruckdämpfer') + techRow('Garantie','10 Jahre')
+  + techRow('Solarmodul', SP.wp+' Wp') + techRow('Wechselrichter',SP.inverter+' W') + techRow('Material', SP.material) + techRow('Maße', SP.masse) + techRow('Neigung','25° per Gasdruckdämpfer') + techRow('Garantie','10 Jahre')
   + '</div></div></div></div></div></div>';
 }
 
