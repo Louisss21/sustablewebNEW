@@ -27,12 +27,16 @@ ready(function(){
     '<span class="guide-avwrap"><img class="guide-av" alt="" width="62" height="62">' +
     '<span class="guide-wave" aria-hidden="true"><i></i><i></i><i></i></span></span>' +
     '<div class="guide-bubble"><button class="guide-x" aria-label="Guide einklappen" title="Einklappen">×</button>' +
-    '<div class="guide-name mono"></div><div class="guide-text"></div><div class="guide-actions"></div></div>';
+    '<div class="guide-name mono"></div><div class="guide-text"></div><div class="guide-actions"></div>' +
+    '<form class="guide-ask"><input class="guide-ask-in" type="text" maxlength="300" placeholder="Frag Louis & Nils …" aria-label="Frage stellen"><button class="guide-ask-send" type="submit" aria-label="Frage senden">→</button></form>' +
+    '<div class="guide-ask-note mono">KI-Antwort · kann Fehler enthalten</div></div>';
   document.body.appendChild(el);
   var avEl = el.querySelector(".guide-av");
   var nameEl = el.querySelector(".guide-name");
   var textEl = el.querySelector(".guide-text");
   var actEl = el.querySelector(".guide-actions");
+  var askForm = el.querySelector(".guide-ask");
+  var askIn = el.querySelector(".guide-ask-in");
 
   var backdrop = document.createElement("div");
   backdrop.className = "guide-backdrop";
@@ -47,7 +51,7 @@ ready(function(){
   document.body.appendChild(launcher);
   if (collapsed) launcher.hidden = false;
 
-  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null;
+  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false;
 
   function stopType(){ if(typeTimer){ clearTimeout(typeTimer); typeTimer=null; } el.classList.remove("talking"); }
   function typeOut(text){
@@ -81,6 +85,7 @@ ready(function(){
   function show(){ el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
   function scheduleHide(text){
     if (hideTimer) clearTimeout(hideTimer);
+    if (pinned) return;
     var t = Math.min(12000, 4000 + text.length*45);
     hideTimer = setTimeout(function h(){
       if (centerActive){ hideTimer = setTimeout(h, 1500); return; }
@@ -106,7 +111,7 @@ ready(function(){
     if (centerTimer){ clearTimeout(centerTimer); centerTimer=null; }
   }
   function reveal(node){
-    if (!node || node===lastEl || collapsed || centerActive) return;
+    if (!node || node===lastEl || collapsed || centerActive || pinned) return;
     lastEl = node;
     var who = node.getAttribute("data-gd-who");
     var text = node.getAttribute("data-gd");
@@ -133,6 +138,45 @@ ready(function(){
   el.querySelector(".guide-x").addEventListener("click", function(ev){ ev.stopPropagation(); collapse(); });
   el.addEventListener("click", function(){ if (centerActive) exitCenter(); });
   launcher.addEventListener("click", expand);
+
+  // ---- KI-Frage ----
+  function ask(q){
+    pinned = true;
+    exitCenter();
+    if (hideTimer) clearTimeout(hideTimer);
+    if (askIn) askIn.blur();
+    avEl.src = AV.louis.img; nameEl.textContent = "Louis"; renderActions("");
+    el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+    stopType(); el.classList.add("talking"); textEl.textContent = "…";
+    var fail = function(){
+      el.classList.remove("talking");
+      typeOut("Ich bin gerade nicht erreichbar – schreib uns an louis.mueller@sustable.eu, dann helfen wir dir direkt.");
+      renderActions("E-Mail schreiben|mailto:louis.mueller@sustable.eu");
+    };
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q })
+    })
+    .then(function(r){ return r.json().catch(function(){ return {}; }); })
+    .then(function(d){
+      el.classList.remove("talking");
+      var a = (d && d.answer) ? String(d.answer) : "";
+      if (a){ typeOut(a); if (askIn) askIn.value = ""; }
+      else { fail(); }
+    })
+    .catch(fail);
+  }
+  if (askIn){
+    askIn.addEventListener("focus", function(){ pinned = true; if (hideTimer) clearTimeout(hideTimer); if (collapsed) expand(); });
+  }
+  if (askForm){
+    askForm.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var q = (askIn && askIn.value ? askIn.value : "").trim();
+      if (q) ask(q);
+    });
+  }
 
   var anchors = Array.prototype.slice.call(document.querySelectorAll("[data-gd]"));
   if (anchors.length && "IntersectionObserver" in window){

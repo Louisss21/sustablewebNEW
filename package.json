@@ -1,0 +1,9 @@
+{
+  "name": "sustable-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sustable Website + KI-Frage-Endpoint (Vercel Serverless Function)",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
