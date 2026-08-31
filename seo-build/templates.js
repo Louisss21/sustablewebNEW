@@ -10,8 +10,8 @@ var DEFAULT_OG_IMAGE = SITE_URL + "/assets/hero-v5.png"; // TODO: dediziertes 12
 
 /* ---------------- Produkte ---------------- */
 var PRODUCTS = [
-  { id:'one-plus', slug:'solartisch-sustable-one-edelstahl', name:'Sustable ONE+ Edelstahl', fullName:'Solartisch Sustable ONE+ Edelstahl', shortLabel:'ONE+', price:1750, wp:465, kwp:0.465, material:'Edelstahl, gebürstet', masse:'172 × 115 × 75 cm', inverter:500, rollen:true, img:'https://sustable.eu/wp-content/uploads/2025/10/One_1.avif', badge:'465 Wp · Edelstahl', tagline:'Das Flaggschiff aus gebürstetem Edelstahl.', desc:'Eleganter Solartisch aus gebürstetem Edelstahl mit 465 Wp-Solarmodul und 500 W-Wechselrichter – für Balkon, Terrasse oder Garten.' },
-  { id:'one', slug:'solartisch-sustable-one-aluminium', name:'Sustable ONE Aluminium', fullName:'Solartisch Sustable ONE Aluminium', shortLabel:'ONE', price:1490, wp:465, kwp:0.465, material:'Aluminium, anthrazit', masse:'172 × 115 × 75 cm', inverter:500, rollen:true, img:'https://sustable.eu/wp-content/uploads/2025/10/One_7.avif', badge:'465 Wp · Aluminium', tagline:'Gleiche Leistung, leichter Aluminiumrahmen.', desc:'Solartisch mit pulverbeschichtetem Aluminiumrahmen in Anthrazit und 465 Wp-Solarmodul – leichter und besonders wetterbeständig.' },
+  { id:'one-plus', slug:'solartisch-sustable-one-edelstahl', name:'Sustable ONE+ Edelstahl', fullName:'Solartisch Sustable ONE+ Edelstahl', shortLabel:'ONE+', price:1750, wp:465, kwp:0.465, material:'Edelstahl, gebürstet', masse:'180 × 110 × 75 cm', inverter:500, rollen:true, img:'/assets/oneplus-gedeckt-garten.jpg', gallery:['/assets/oneplus-gedeckt-garten.jpg','/assets/oneplus-garten.jpg','/assets/oneplus-detail.jpg','/assets/oneplus-aufgeklappt.jpg'], badge:'465 Wp · Edelstahl', tagline:'Das Flaggschiff aus gebürstetem Edelstahl.', desc:'Eleganter Solartisch aus gebürstetem Edelstahl mit 465 Wp-Solarmodul und 500 W-Wechselrichter – für Balkon, Terrasse oder Garten.' },
+  { id:'one', slug:'solartisch-sustable-one-aluminium', name:'Sustable ONE Aluminium', fullName:'Solartisch Sustable ONE Aluminium', shortLabel:'ONE', price:1650, wp:465, kwp:0.465, material:'Aluminium, anthrazit', masse:'180 × 110 × 75 cm', inverter:500, rollen:true, img:'https://sustable.eu/wp-content/uploads/2025/10/One_7.avif', badge:'465 Wp · Aluminium', tagline:'Gleiche Leistung, leichter Aluminiumrahmen.', desc:'Solartisch mit pulverbeschichtetem Aluminiumrahmen in Anthrazit und 465 Wp-Solarmodul – leichter und besonders wetterbeständig.' },
   { id:'mini', slug:'solartisch-sustable-mini', name:'Sustable mini', fullName:'Solartisch Sustable mini', shortLabel:'mini', price:1500, wp:315, kwp:0.315, material:'Aluminium, anthrazit', masse:'165 × 88 × 75 cm', inverter:350, rollen:false, img:'/assets/mini-terrasse.jpg', gallery:['/assets/mini-terrasse.jpg','/assets/mini-topdown.jpg','/assets/mini-gedeckt-frontal.jpg','/assets/mini-leer-diagonal.jpg','/assets/mini-aufgeklappt.jpg'], badge:'315 Wp · Aluminium', tagline:'Kompakt für Balkon und kleine Terrassen.', desc:'Der kompakte Solartisch mit 315 Wp-Modul – ideal für Balkon und kleinere Terrassen, mit identischer Plug-&-Play-Technik.' }
 ];
 function prod(id){ for (var i=0;i<PRODUCTS.length;i++){ if (PRODUCTS[i].id===id) return PRODUCTS[i]; } return PRODUCTS[0]; }
@@ -31,7 +31,7 @@ var FAQS = [
     { k:'a3', q:'Kann ich den Tisch als normales Möbelstück nutzen?', a:'Ja! Der Solartisch ist wetterfest, stabil und kann sowohl als Esstisch, Gartentisch oder Arbeitsplatz genutzt werden. Er ist robust und leicht zu reinigen.' }
   ]},
   { cat:'Technische Fragen', items:[
-    { k:'t1', q:'Welche technischen Daten hat der Solartisch?', a:'Leistung: 470 W PV-Modul. Wechselrichter: 500 W Mikro-Wechselrichter integriert. Material: entspiegeltes, gehärtetes Glas mit Aluminiumrahmen. Wetterfestigkeit: IP65 (geeignet für den Außeneinsatz). Maße: 172 cm × 115 cm × 75 cm. Gewicht: ca. 50 kg.' },
+    { k:'t1', q:'Welche technischen Daten hat der Solartisch?', a:'Leistung: 470 W PV-Modul. Wechselrichter: 500 W Mikro-Wechselrichter integriert. Material: entspiegeltes, gehärtetes Glas mit Aluminiumrahmen. Wetterfestigkeit: IP65 (geeignet für den Außeneinsatz). Maße: 180 cm × 110 cm × 75 cm. Gewicht: ca. 50 kg.' },
     { k:'t2', q:'Wie viel Strom kann der Solartisch erzeugen?', a:'Bei guten Bedingungen kann der Tisch ca. 450–500 kWh pro Jahr erzeugen – genug, um mehr als einen Kühlschrank das ganze Jahr zu betreiben oder dein Smartphone über 100.000-mal aufzuladen.' },
     { k:'t3', q:'Brauche ich einen zusätzlichen Wechselrichter?', a:'Nein, der Tisch hat bereits einen integrierten 500 W Mikro-Wechselrichter. Er wird direkt per Steckdose ans Hausnetz angeschlossen.' }
   ]},
@@ -47,7 +47,7 @@ var FAQS = [
     { k:'p3', q:'Wie lange hält das PV-Modul?', a:'Die Lebensdauer beträgt 25 Jahre und länger, wobei die Leistung nach 20 Jahren noch bei über ca. 90 % liegt.' }
   ]},
   { cat:'Kauf & Garantie', items:[
-    { k:'k1', q:'Wie viel kostet der Solartisch?', a:'Sustable ONE (Aluminium Anthrazit): ab 1.490 €. Sustable ONE+ (Edelstahl gebürstet): 1.750 €. Sustable mini (kompakt): 1.500 €.' },
+    { k:'k1', q:'Wie viel kostet der Solartisch?', a:'Sustable ONE (Aluminium Anthrazit): ab 1.650 €. Sustable ONE+ (Edelstahl gebürstet): 1.750 €. Sustable mini (kompakt): 1.500 €.' },
     { k:'k2', q:'Ist der Solartisch förderfähig und umsatzsteuerbefreit?', a:'Ja. Der Solartisch ist ein Tischkraftwerk und damit ein Kleinkraftwerk, das in den meisten deutschen Regionen förderfähig ist. Für die Lieferung von Solartischen mit integrierter Photovoltaikanlage unter 30 kWp zur Nutzung im häuslichen Umfeld gilt der Umsatzsteuersatz von 0 % gemäß § 12 Abs. 3 Nr. 1 UStG.' }
   ]}
 ];
