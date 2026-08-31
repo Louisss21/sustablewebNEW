@@ -106,10 +106,22 @@ function manufactureSection(){
 
 /* ---------------- PRODUKT ---------------- */
 function pageProdukt(SP){
+  var imgBlock;
+  if (SP.gallery && SP.gallery.length > 1){
+    var thumbs = '';
+    for (var gi=0; gi<SP.gallery.length; gi++){
+      thumbs += '<button type="button" class="pd-thumb'+(gi===0?' is-active':'')+'" data-full="'+SP.gallery[gi]+'" aria-label="Bild '+(gi+1)+' anzeigen"><img src="'+SP.gallery[gi]+'" alt="'+esc(SP.fullName)+' – Ansicht '+(gi+1)+'" loading="lazy" width="120" height="90"></button>';
+    }
+    imgBlock = '<div class="pd-gallery">'
+      + '<div class="pd-img" style="border-radius:22px; overflow:hidden; background:#f5f5f7; height:480px;"><img id="pd-main" src="'+SP.gallery[0]+'" alt="'+esc(SP.fullName)+'" width="800" height="800" style="width:100%; height:100%; object-fit:cover; display:block;"></div>'
+      + '<div class="pd-thumbs">'+thumbs+'</div></div>';
+  } else {
+    imgBlock = '<div class="pd-img" style="border-radius:22px; overflow:hidden; background:#f5f5f7; height:480px;"><img src="'+SP.img+'" alt="'+esc(SP.fullName)+'" width="800" height="800" style="width:100%; height:100%; object-fit:cover; display:block;"></div>';
+  }
   return '<div style="background:#ffffff; padding:50px 32px 120px;"><div style="max-width:1180px; margin:0 auto;">'
   + '<nav aria-label="Brotkrumen" style="font-size:13.5px; color:#86868b; margin-bottom:36px;"><a href="/" style="color:#86868b;">Start</a><span> / </span><a href="/shop/" style="color:#86868b;">Shop</a><span> / </span><span style="color:#1d1d1f; font-weight:600;">'+esc(SP.fullName)+'</span></nav>'
   + '<div class="grid2" style="display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:start;">'
-  + '<div class="pd-img" style="border-radius:22px; overflow:hidden; background:#f5f5f7; height:480px;"><img src="'+SP.img+'" alt="'+esc(SP.fullName)+'" width="800" height="800" style="width:100%; height:100%; object-fit:cover; display:block;"></div>'
+  + imgBlock
   + '<div><h1 data-gd="Das ist er im Detail. Ich bin Louis – frag mich einfach, wenn du was wissen willst." data-gd-who="louis" style="margin:0 0 14px; font-size:34px; font-weight:700; letter-spacing:-0.02em; color:#1d1d1f;">'+esc(SP.fullName)+'</h1><div style="font-size:30px; font-weight:700; color:#1d1d1f; margin-bottom:6px;">'+fmtEur(SP.price)+'</div><div style="font-size:13px; color:#86868b; margin-bottom:26px;">inkl. MwSt. · zzgl. Versand</div><p style="margin:0 0 26px; font-size:15px; line-height:1.7; color:#6e6e73;">'+esc(SP.desc)+'</p>'
   + '<ul style="margin:0 0 30px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14.5px; color:#1d1d1f;">'
   + '<li style="display:flex; gap:12px; align-items:center;">'+check+SP.wp+' Wp-Solarmodul, 500 W-Wechselrichter</li>'

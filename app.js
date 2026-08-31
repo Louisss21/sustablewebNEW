@@ -123,6 +123,20 @@ function initProductQty(){
   if (dec) dec.addEventListener('click', function(){ q.textContent = Math.max(1, val()-1); });
 }
 
+/* ---------- Produkt-Galerie (Thumbnail-Wechsel) ---------- */
+function initProductGallery(){
+  var main = document.getElementById('pd-main'); if (!main) return;
+  var thumbs = document.querySelectorAll('.pd-thumb');
+  for (var i=0;i<thumbs.length;i++){
+    thumbs[i].addEventListener('click', function(){
+      var full = this.getAttribute('data-full'); if (!full) return;
+      main.src = full;
+      for (var j=0;j<thumbs.length;j++) thumbs[j].classList.remove('is-active');
+      this.classList.add('is-active');
+    });
+  }
+}
+
 /* ---------- Warenkorb ---------- */
 function renderCart(){
   var root = document.getElementById('cart-app'); if (!root) return;
@@ -276,7 +290,7 @@ function init(){
   initAddButtons();
   var page = document.body.getAttribute('data-page');
   if (page==='home') initCalc();
-  if (page==='produkt') initProductQty();
+  if (page==='produkt'){ initProductQty(); initProductGallery(); }
   if (page==='warenkorb') renderCart();
   if (page==='checkout') initCheckout();
   if (page==='haendler') initHaendler();

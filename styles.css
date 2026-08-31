@@ -50,6 +50,7 @@ body.menu-open .mobile-menu { display: flex; }
   .cart-name { flex: 1 1 140px !important; }
   .mehr-flex { gap: 48px !important; }
   .pd-img { height: 320px !important; }
+  .pd-thumb { width: 84px !important; height: 62px !important; }
 }
 
 /* ===== Klein (<= 480px) ===== */
@@ -212,3 +213,12 @@ h1,h2 { letter-spacing: -0.03em; }
 .guide-ask-send { flex-shrink: 0; width: 30px; height: 30px; border: 0; border-radius: 50%; background: #111113; color: #ffffff; cursor: pointer; font-size: 15px; line-height: 1; transition: background .15s ease; }
 .guide-ask-send:hover { background: #2c2c2e; }
 .guide-ask-note { margin-top: 6px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #c7c7cc; }
+
+/* ===== Produkt-Galerie ===== */
+.pd-gallery { display: flex; flex-direction: column; gap: 14px; }
+.pd-thumbs { display: flex; gap: 12px; flex-wrap: wrap; }
+.pd-thumb { padding: 0; border: 2px solid transparent; border-radius: 14px; overflow: hidden; background: #f5f5f7; cursor: pointer; width: 104px; height: 78px; transition: border-color .15s ease, transform .15s ease; }
+.pd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pd-thumb:hover { transform: translateY(-2px); }
+.pd-thumb.is-active { border-color: #F07D00; }
+.pd-thumb:focus-visible { outline: 2px solid #F07D00; outline-offset: 2px; }
