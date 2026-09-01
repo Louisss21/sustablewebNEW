@@ -166,6 +166,12 @@ h1,h2 { letter-spacing: -0.03em; }
 .guide-avwrap { position: relative; flex-shrink: 0; align-self: flex-end; }
 .guide-av { transform-origin: center bottom; }
 .guide.talking .guide-av { animation: guideTalk .18s ease-in-out infinite alternate; }
+/* Zweiter Gründer (Nils) – nur im Chatbot-/Duo-Modus, schaut hinter Louis hervor */
+.guide-av-2 { display: none; position: absolute; left: -14px; bottom: 16px; width: 46px; height: 46px; border-radius: 50%; object-fit: cover; background: #f5f5f7; border: 2.5px solid #ffffff; box-shadow: 0 5px 14px rgba(0,0,0,.18); z-index: 1; transform-origin: center bottom; animation: guideBreathe 4.6s ease-in-out .4s infinite; }
+.guide.duo .guide-av-2 { display: block; }
+.guide.duo .guide-av { position: relative; z-index: 2; }
+@media (max-width: 620px) { .guide-av-2 { width: 40px; height: 40px; left: -12px; bottom: 14px; } }
+@media (prefers-reduced-motion: reduce) { .guide-av-2 { animation: none; } }
 @keyframes guideTalk { 0% { transform: scaleY(.975); } 100% { transform: scaleY(1.045) translateY(-1px); } }
 
 /* Sprech-Wellen-Indikator */

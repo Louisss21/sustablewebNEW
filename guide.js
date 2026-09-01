@@ -25,7 +25,7 @@ ready(function(){
   var el = document.createElement("div");
   el.className = "guide";
   el.innerHTML =
-    '<span class="guide-avwrap"><img class="guide-av" alt="" width="62" height="62">' +
+    '<span class="guide-avwrap"><img class="guide-av-2" alt="" width="46" height="46"><img class="guide-av" alt="" width="62" height="62">' +
     '<span class="guide-wave" aria-hidden="true"><i></i><i></i><i></i></span></span>' +
     '<div class="guide-bubble"><button class="guide-x" aria-label="Guide einklappen" title="Einklappen">×</button>' +
     '<div class="guide-name mono"></div><div class="guide-text"></div><div class="guide-actions"></div>' +
@@ -33,6 +33,7 @@ ready(function(){
     '<div class="guide-ask-note mono">KI-Antwort · kann Fehler enthalten</div></div>';
   document.body.appendChild(el);
   var avEl = el.querySelector(".guide-av");
+  var av2El = el.querySelector(".guide-av-2");
   var nameEl = el.querySelector(".guide-name");
   var textEl = el.querySelector(".guide-text");
   var actEl = el.querySelector(".guide-actions");
@@ -115,9 +116,9 @@ ready(function(){
     greetHold = true;
     if (greetHoldTimer) clearTimeout(greetHoldTimer);
     greetHoldTimer = setTimeout(function(){ greetHold = false; }, 7000);
-    avEl.src = AV.louis.img; nameEl.textContent = "Louis";
+    setDuo();
     el.classList.add("intro"); show();
-    typeOut("Hi! Ich bin Louis 👋 Suchst du einen neuen Gartentisch?");
+    typeOut("Hi! Wir sind Louis & Nils 👋 Suchst du einen neuen Gartentisch?");
     renderReplies([
       { label:"Ja", fn:startSales },
       { label:"Nur schauen", fn:browseReply }
@@ -139,9 +140,19 @@ ready(function(){
       el.classList.remove("show"); stopType();
     }, t);
   }
-  function setMessage(who, text, actions){
+  function setDuo(){
+    el.classList.add("duo");
+    avEl.src = AV.louis.img;
+    if (av2El) av2El.src = AV.nils.img;
+    nameEl.textContent = "Louis & Nils";
+  }
+  function setSolo(who){
+    el.classList.remove("duo");
     var a = AV[who] || AV.louis;
-    avEl.src = a.img; nameEl.textContent = a.name; hasMsg = true;
+    avEl.src = a.img; nameEl.textContent = a.name;
+  }
+  function setMessage(who, text, actions){
+    setSolo(who); hasMsg = true;
     renderActions(actions);
     if (!collapsed){ show(); typeOut(text); scheduleHide(text); }
   }
@@ -184,15 +195,15 @@ ready(function(){
     exitCenter();
     if (hideTimer) clearTimeout(hideTimer);
     if (askIn) askIn.blur();
-    avEl.src = AV.louis.img; nameEl.textContent = "Louis"; actEl.innerHTML = "";
+    setDuo(); actEl.innerHTML = "";
     el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
     stopType(); el.classList.add("talking"); textEl.textContent = "…";
     history.push({ role:"user", content:q });
     var fail = function(){
       history.pop();
       el.classList.remove("talking");
-      typeOut("Ich bin gerade nicht erreichbar – schreib uns an louis.mueller@sustable.eu, dann helfen wir dir direkt.");
-      renderActions("E-Mail schreiben|mailto:louis.mueller@sustable.eu");
+      typeOut("Wir sind gerade nicht erreichbar – schreib uns an info@sustable.eu, dann helfen wir dir direkt.");
+      renderActions("E-Mail schreiben|mailto:info@sustable.eu");
     };
     fetch("/api/ask", {
       method: "POST",
