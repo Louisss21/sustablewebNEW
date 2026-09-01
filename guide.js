@@ -52,7 +52,7 @@ ready(function(){
   document.body.appendChild(launcher);
   if (greeted) launcher.hidden = false;
 
-  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false, history=[];
+  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false, greetHold=false, greetHoldTimer=null, history=[];
 
   function stopType(){ if(typeTimer){ clearTimeout(typeTimer); typeTimer=null; } el.classList.remove("talking"); }
   function cleanText(t){
@@ -107,10 +107,14 @@ ready(function(){
     });
   }
   function greet(){
-    pinned = true; hasMsg = true; collapsed = false;
+    hasMsg = true; collapsed = false;
     try { sessionStorage.setItem(STORE,"1"); } catch(e){}
     launcher.hidden = true;
     if (hideTimer) clearTimeout(hideTimer);
+    // Begrüßung kurz halten, damit Abschnitts-Einblendungen sie nicht sofort ersetzen
+    greetHold = true;
+    if (greetHoldTimer) clearTimeout(greetHoldTimer);
+    greetHoldTimer = setTimeout(function(){ greetHold = false; }, 7000);
     avEl.src = AV.louis.img; nameEl.textContent = "Louis";
     el.classList.add("intro"); show();
     typeOut("Hi! Ich bin Louis 👋 Suchst du einen neuen Gartentisch?");
@@ -154,7 +158,7 @@ ready(function(){
     if (centerTimer){ clearTimeout(centerTimer); centerTimer=null; }
   }
   function reveal(node){
-    if (!node || node===lastEl || collapsed || pinned) return;
+    if (!node || node===lastEl || collapsed || pinned || greetHold) return;
     lastEl = node;
     var who = node.getAttribute("data-gd-who");
     var text = node.getAttribute("data-gd");
