@@ -130,14 +130,14 @@ ready(function(){
     renderReplies(null);
     typeOut("Alles klar! Frag mich einfach, wenn du was wissen willst.");
   }
-  function show(){ el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
+  function show(){ launcher.hidden = true; el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
   function scheduleHide(text){
     if (hideTimer) clearTimeout(hideTimer);
     if (pinned) return;
     var t = Math.min(12000, 4000 + text.length*45);
     hideTimer = setTimeout(function h(){
       if (centerActive){ hideTimer = setTimeout(h, 1500); return; }
-      el.classList.remove("show"); stopType();
+      el.classList.remove("show"); stopType(); launcher.hidden = false;
     }, t);
   }
   function setDuo(){
