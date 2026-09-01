@@ -21,9 +21,15 @@ Fakten:
 
 Regeln:
 - Antworte auf Deutsch, in Du-Form, freundlich und kurz (1–3 Sätze).
+- Formatierung: schlichter Fließtext. KEIN Markdown – keine Sternchen (*), keine Rauten (#), keine Aufzählungszeichen, kein Fettdruck. Höchstens ein passendes Emoji, meistens gar keins.
 - Nur Themen rund um Sustable und die Solartische. Bei fremden Themen freundlich zurück zum Produkt lenken.
 - Erfinde keine Fakten. Wenn du etwas nicht sicher weißt, sag das und verweise auf louis.mueller@sustable.eu.
-- Nenne Preise in Euro. Keine Rechts- oder Steuerberatung – nur die obigen Eckdaten.`;
+- Nenne Preise in Euro. Keine Rechts- oder Steuerberatung – nur die obigen Eckdaten.
+
+Als Verkaufsberater:
+- Wenn jemand Interesse an einem Tisch zeigt oder unsicher ist, verhalte dich wie ein sympathischer, kompetenter Verkaufsberater.
+- Stelle zuerst 1–2 kurze Rückfragen (z. B. Größe von Terrasse/Balkon, Sonnenlage, wie viele Personen, Budget), bevor du empfiehlst.
+- Empfiehl dann konkret ein Modell (mini, ONE oder ONE+) mit kurzer Begründung und einem klaren nächsten Schritt (z. B. im Shop ansehen). Dränge nicht, bleib locker und hilfsbereit.`;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -35,9 +41,21 @@ export default async function handler(req, res) {
     if (typeof body === "string") {
       try { body = JSON.parse(body); } catch { body = {}; }
     }
-    const question = (body && body.question ? String(body.question) : "").trim();
-    if (!question) { res.status(400).json({ error: "Keine Frage übergeben." }); return; }
-    if (question.length > 400) { res.status(400).json({ error: "Frage zu lang." }); return; }
+
+    // Gesprächsverlauf (messages) bevorzugt, sonst einzelne Frage (question)
+    let messages = Array.isArray(body && body.messages) ? body.messages : null;
+    if (!messages) {
+      const question = (body && body.question ? String(body.question) : "").trim();
+      if (question) messages = [{ role: "user", content: question }];
+    }
+    messages = (messages || [])
+      .filter((m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim())
+      .map((m) => ({ role: m.role, content: String(m.content).slice(0, 1000) }))
+      .slice(-16);
+    // mit einer Assistenten-Nachricht darf nicht begonnen werden
+    while (messages.length && messages[0].role === "assistant") messages.shift();
+
+    if (!messages.length) { res.status(400).json({ error: "Keine Frage übergeben." }); return; }
     if (!process.env.ANTHROPIC_API_KEY) {
       res.status(500).json({ error: "Server nicht konfiguriert (API-Key fehlt)." });
       return;
@@ -48,7 +66,7 @@ export default async function handler(req, res) {
       model: "claude-haiku-4-5",
       max_tokens: 400,
       system: SYSTEM,
-      messages: [{ role: "user", content: question }],
+      messages,
     });
 
     const answer = msg.content

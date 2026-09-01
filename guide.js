@@ -51,10 +51,23 @@ ready(function(){
   document.body.appendChild(launcher);
   if (collapsed) launcher.hidden = false;
 
-  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false;
+  var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false, history=[];
 
   function stopType(){ if(typeTimer){ clearTimeout(typeTimer); typeTimer=null; } el.classList.remove("talking"); }
-  function typeOut(text){
+  function cleanText(t){
+    if (!t) return "";
+    return String(t)
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/__(.*?)__/g, "$1")
+      .replace(/(^|[^\*])\*(?!\s)([^\*]+?)\*(?!\*)/g, "$1$2")
+      .replace(/`([^`]*)`/g, "$1")
+      .replace(/^\s*#{1,6}\s+/gm, "")
+      .replace(/^\s*[-•]\s+/gm, "• ")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+  function typeOut(raw){
+    var text = cleanText(raw);
     stopType();
     if (reduce){ textEl.textContent = text; return; }
     el.classList.add("talking");
@@ -81,6 +94,33 @@ ready(function(){
       a.addEventListener("click", function(ev){ ev.stopPropagation(); });
       actEl.appendChild(a);
     }
+  }
+  function renderReplies(replies){
+    actEl.innerHTML = "";
+    if (!replies) return;
+    replies.forEach(function(rp){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "guide-btn guide-qr"; b.textContent = rp.label;
+      b.addEventListener("click", function(ev){ ev.stopPropagation(); rp.fn(); });
+      actEl.appendChild(b);
+    });
+  }
+  function greet(){
+    pinned = true; hasMsg = true;
+    if (hideTimer) clearTimeout(hideTimer);
+    avEl.src = AV.louis.img; nameEl.textContent = "Louis";
+    el.classList.add("intro"); show();
+    typeOut("Hallo! Ich bin Louis von Sustable. Wie geht's dir heute? Suchst du gerade nach einem neuen Gartentisch?");
+    renderReplies([
+      { label:"Ja, tatsächlich", fn:startSales },
+      { label:"Erstmal umschauen", fn:browseReply }
+    ]);
+    setTimeout(function(){ el.classList.remove("intro"); }, 1000);
+  }
+  function startSales(){ ask("Ja, ich suche einen neuen Gartentisch. Kannst du mich kurz beraten?"); }
+  function browseReply(){
+    renderReplies(null);
+    typeOut("Alles gut – schau dich in Ruhe um. Wenn du eine Frage zu den Solartischen hast, tippe sie einfach hier unten ein. Ich bin da.");
   }
   function show(){ el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
   function scheduleHide(text){
@@ -111,16 +151,11 @@ ready(function(){
     if (centerTimer){ clearTimeout(centerTimer); centerTimer=null; }
   }
   function reveal(node){
-    if (!node || node===lastEl || collapsed || centerActive || pinned) return;
+    if (!node || node===lastEl || collapsed || pinned) return;
     lastEl = node;
     var who = node.getAttribute("data-gd-who");
     var text = node.getAttribute("data-gd");
     setMessage(who, text, node.getAttribute("data-gd-actions"));
-    if (node.getAttribute("data-gd-center")){
-      enterCenter();
-      var dur = reduce ? 2600 : (2800 + text.length*26 + 1500);
-      centerTimer = setTimeout(exitCenter, dur);
-    }
   }
   function collapse(){
     collapsed = true;
@@ -132,8 +167,7 @@ ready(function(){
     collapsed = false;
     try { localStorage.removeItem(STORE); } catch(e){}
     launcher.hidden = true;
-    if (!hasMsg) setMessage("louis","Da bin ich wieder! Ich meld mich, wenn's zu einem Bereich etwas zu sagen gibt.");
-    else { show(); scheduleHide(textEl.textContent||""); }
+    greet();
   }
   el.querySelector(".guide-x").addEventListener("click", function(ev){ ev.stopPropagation(); collapse(); });
   el.addEventListener("click", function(){ if (centerActive) exitCenter(); });
@@ -145,10 +179,12 @@ ready(function(){
     exitCenter();
     if (hideTimer) clearTimeout(hideTimer);
     if (askIn) askIn.blur();
-    avEl.src = AV.louis.img; nameEl.textContent = "Louis"; renderActions("");
+    avEl.src = AV.louis.img; nameEl.textContent = "Louis"; actEl.innerHTML = "";
     el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
     stopType(); el.classList.add("talking"); textEl.textContent = "…";
+    history.push({ role:"user", content:q });
     var fail = function(){
+      history.pop();
       el.classList.remove("talking");
       typeOut("Ich bin gerade nicht erreichbar – schreib uns an louis.mueller@sustable.eu, dann helfen wir dir direkt.");
       renderActions("E-Mail schreiben|mailto:louis.mueller@sustable.eu");
@@ -156,13 +192,13 @@ ready(function(){
     fetch("/api/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: q })
+      body: JSON.stringify({ messages: history.slice(-16) })
     })
     .then(function(r){ return r.json().catch(function(){ return {}; }); })
     .then(function(d){
       el.classList.remove("talking");
       var a = (d && d.answer) ? String(d.answer) : "";
-      if (a){ typeOut(a); if (askIn) askIn.value = ""; }
+      if (a){ history.push({ role:"assistant", content:a }); typeOut(a); if (askIn) askIn.value = ""; }
       else { fail(); }
     })
     .catch(fail);
@@ -186,9 +222,9 @@ ready(function(){
       if (best) reveal(best);
     }, { rootMargin:"-42% 0px -42% 0px", threshold:0 });
     anchors.forEach(function(a){ io.observe(a); });
-    setTimeout(function(){ if(!hasMsg && !collapsed) reveal(anchors[0]); }, reduce?300:1100);
+    setTimeout(function(){ if(!hasMsg && !collapsed) greet(); }, reduce?400:900);
   } else {
-    setTimeout(function(){ if(!collapsed) setMessage(DEFAULT_MSG.who, DEFAULT_MSG.text); }, reduce?300:1200);
+    setTimeout(function(){ if(!collapsed) greet(); }, reduce?400:900);
   }
 });
 })();
