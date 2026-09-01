@@ -110,17 +110,17 @@ ready(function(){
     if (hideTimer) clearTimeout(hideTimer);
     avEl.src = AV.louis.img; nameEl.textContent = "Louis";
     el.classList.add("intro"); show();
-    typeOut("Hallo! Ich bin Louis von Sustable. Wie geht's dir heute? Suchst du gerade nach einem neuen Gartentisch?");
+    typeOut("Hi! Ich bin Louis 👋 Suchst du einen neuen Gartentisch?");
     renderReplies([
-      { label:"Ja, tatsächlich", fn:startSales },
-      { label:"Erstmal umschauen", fn:browseReply }
+      { label:"Ja", fn:startSales },
+      { label:"Nur schauen", fn:browseReply }
     ]);
     setTimeout(function(){ el.classList.remove("intro"); }, 1000);
   }
   function startSales(){ ask("Ja, ich suche einen neuen Gartentisch. Kannst du mich kurz beraten?"); }
   function browseReply(){
     renderReplies(null);
-    typeOut("Alles gut – schau dich in Ruhe um. Wenn du eine Frage zu den Solartischen hast, tippe sie einfach hier unten ein. Ich bin da.");
+    typeOut("Alles klar! Frag mich einfach, wenn du was wissen willst.");
   }
   function show(){ el.classList.remove("show"); void el.offsetWidth; el.classList.add("show"); }
   function scheduleHide(text){
@@ -222,9 +222,9 @@ ready(function(){
       if (best) reveal(best);
     }, { rootMargin:"-42% 0px -42% 0px", threshold:0 });
     anchors.forEach(function(a){ io.observe(a); });
-    setTimeout(function(){ if(!hasMsg && !collapsed) greet(); }, reduce?400:900);
+    setTimeout(function(){ if(!hasMsg && !collapsed) greet(); }, reduce?150:200);
   } else {
-    setTimeout(function(){ if(!collapsed) greet(); }, reduce?400:900);
+    setTimeout(function(){ if(!collapsed) greet(); }, reduce?150:200);
   }
 });
 })();
