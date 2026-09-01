@@ -19,7 +19,8 @@ function ready(fn){ if(document.readyState==="loading") document.addEventListene
 
 ready(function(){
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var collapsed = false; try { collapsed = !!localStorage.getItem(STORE); } catch(e){}
+  var collapsed = false;
+  var greeted = false; try { greeted = !!sessionStorage.getItem(STORE); } catch(e){}
 
   var el = document.createElement("div");
   el.className = "guide";
@@ -49,7 +50,7 @@ ready(function(){
   launcher.innerHTML = '<img src="'+AV.louis.img+'" alt=""><span class="guide-launcher-dot"></span>';
   launcher.hidden = true;
   document.body.appendChild(launcher);
-  if (collapsed) launcher.hidden = false;
+  if (greeted) launcher.hidden = false;
 
   var lastEl=null, hasMsg=false, centerActive=false, typeTimer=null, centerTimer=null, hideTimer=null, pinned=false, history=[];
 
@@ -106,7 +107,9 @@ ready(function(){
     });
   }
   function greet(){
-    pinned = true; hasMsg = true;
+    pinned = true; hasMsg = true; collapsed = false;
+    try { sessionStorage.setItem(STORE,"1"); } catch(e){}
+    launcher.hidden = true;
     if (hideTimer) clearTimeout(hideTimer);
     avEl.src = AV.louis.img; nameEl.textContent = "Louis";
     el.classList.add("intro"); show();
@@ -159,13 +162,11 @@ ready(function(){
   }
   function collapse(){
     collapsed = true;
-    try { localStorage.setItem(STORE,"1"); } catch(e){}
     stopType(); exitCenter(); el.classList.remove("show"); launcher.hidden = false;
     if (hideTimer) clearTimeout(hideTimer);
   }
   function expand(){
     collapsed = false;
-    try { localStorage.removeItem(STORE); } catch(e){}
     launcher.hidden = true;
     greet();
   }
@@ -222,9 +223,9 @@ ready(function(){
       if (best) reveal(best);
     }, { rootMargin:"-42% 0px -42% 0px", threshold:0 });
     anchors.forEach(function(a){ io.observe(a); });
-    setTimeout(function(){ if(!hasMsg && !collapsed) greet(); }, reduce?150:200);
+    setTimeout(function(){ if(!hasMsg && !collapsed && !greeted) greet(); }, reduce?120:180);
   } else {
-    setTimeout(function(){ if(!collapsed) greet(); }, reduce?150:200);
+    setTimeout(function(){ if(!collapsed && !greeted) greet(); }, reduce?120:180);
   }
 });
 })();

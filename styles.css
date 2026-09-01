@@ -42,9 +42,9 @@ body.menu-open .mobile-menu { display: flex; }
   .hero p { font-size: 17px !important; margin-bottom: 26px !important; }
   .hero .stack-sm { margin-top: 16px !important; }
   .hero .stack-sm a { padding: 10px 20px !important; font-size: 14px !important; }
-  .calc-pad { padding: 30px !important; }
+  .calc-pad { padding: 20px !important; }
   .calc-stats { gap: 12px !important; }
-  .calc-big { font-size: 44px !important; }
+  .calc-big { font-size: 34px !important; }
   .form-grid { grid-template-columns: 1fr !important; }
   .cart-row { flex-wrap: wrap !important; gap: 12px 14px !important; }
   .cart-name { flex: 1 1 140px !important; }
