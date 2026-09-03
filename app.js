@@ -117,7 +117,8 @@ function openCart(){
   renderDrawer();
   drawerOpen = true;
   document.body.classList.add('cart-open');
-  requestAnimationFrame(function(){ drawerEl.classList.add('open'); });
+  void drawerEl.offsetWidth; /* Reflow erzwingt den Transition-Startframe */
+  drawerEl.classList.add('open');
 }
 function closeCart(){
   if (!drawerEl) return;
