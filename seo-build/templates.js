@@ -157,7 +157,7 @@ function head(o){
   s += '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">\n';
   s += '<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">\n';
   if (o.maplibre) s += '<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">\n';
-  s += '<link rel="stylesheet" href="/styles.css?v=8">\n';
+  s += '<link rel="stylesheet" href="/styles.css?v=9">\n';
   var ld = o.jsonld || [];
   for (var i=0;i<ld.length;i++){
     s += '<script type="application/ld+json">' + JSON.stringify(ld[i]) + '</' + 'script>\n';
@@ -168,9 +168,9 @@ function head(o){
 function doc(o, bodyHtml){
   var scripts = '';
   if (o.maplibre) scripts += '<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></' + 'script>\n';
-  scripts += '<script src="/app.js?v=8" defer></' + 'script>\n';
-  scripts += '<script src="/effects.js?v=8" defer></' + 'script>\n';
-  scripts += '<script src="/guide.js?v=8" defer></' + 'script>\n';
+  scripts += '<script src="/app.js?v=9" defer></' + 'script>\n';
+  scripts += '<script src="/effects.js?v=9" defer></' + 'script>\n';
+  scripts += '<script src="/guide.js?v=9" defer></' + 'script>\n';
   return '<!DOCTYPE html>\n<html lang="de">\n<head>\n' + head(o) + '</head>\n'
     + '<body data-page="' + (o.page||'') + '" style="min-height:100vh; display:flex; flex-direction:column; background:#ffffff;">\n'
     + header(o.page) + '\n<main style="flex:1;">\n' + bodyHtml + '\n</main>\n'
@@ -202,7 +202,7 @@ function header(active){
   + '    <a href="/" class="logo" aria-label="Sustable — Where design meets sustainability" style="cursor:pointer; display:flex; align-items:center; gap:10px; flex-shrink:0; color:#0a0a0c;"><span style="font-weight:600; font-size:22px; letter-spacing:-0.03em; line-height:1; color:#0a0a0c;">sustable<span class="s-dot" style="color:#f07d00;">.</span></span></a>\n'
   + '    <nav class="desktop-nav" aria-label="Hauptnavigation" style="flex:1; display:flex; align-items:center; justify-content:center; gap:32px; font-size:14.5px; font-weight:500;">'+deskLinks+'</nav>\n'
   + '    <div style="display:flex; align-items:center; gap:12px; flex-shrink:0; margin-left:auto;">\n'
-  + '      <a href="/warenkorb/" aria-label="Warenkorb" style="cursor:pointer; display:flex; align-items:center; gap:9px; background:#f5f5f7; border-radius:980px; padding:9px 17px; color:#1d1d1f; font-weight:600; font-size:14px;">\n'
+  + '      <a href="/warenkorb/" data-cart-open aria-label="Warenkorb" style="cursor:pointer; display:flex; align-items:center; gap:9px; background:#f5f5f7; border-radius:980px; padding:9px 17px; color:#1d1d1f; font-weight:600; font-size:14px;">\n'
   + '        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="20" r="1.5"></circle><circle cx="17.5" cy="20" r="1.5"></circle><path d="M3 4h2l2.4 11h10.2L20 7H6.6"></path></svg>\n'
   + '        <span id="cart-count">0</span><span id="cart-total" class="cart-price" style="color:#86868b; font-weight:500;">'+fmtEur(0,2)+'</span>\n'
   + '      </a>\n'

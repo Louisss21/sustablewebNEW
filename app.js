@@ -8,9 +8,9 @@
 
 /* ---------- Daten (nur was der Client braucht) ---------- */
 var PRODUCTS = [
-  { id:'one-plus', slug:'solartisch-sustable-one-edelstahl', fullName:'Solartisch Sustable ONE+ Edelstahl', price:1750, wp:465, kwp:0.465, material:'Edelstahl, gebürstet', masse:'172 × 115 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_1.avif' },
-  { id:'one', slug:'solartisch-sustable-one-aluminium', fullName:'Solartisch Sustable ONE Aluminium', price:1490, wp:465, kwp:0.465, material:'Aluminium, anthrazit', masse:'172 × 115 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_7.avif' },
-  { id:'mini', slug:'solartisch-sustable-mini', fullName:'Solartisch Sustable mini', price:1190, wp:315, kwp:0.315, material:'Aluminium, anthrazit', masse:'140 × 80 × 75 cm', img:'https://sustable.eu/wp-content/uploads/2025/10/One_6.avif' }
+  { id:'one-plus', slug:'solartisch-sustable-one-edelstahl', fullName:'Solartisch Sustable ONE+ Edelstahl', price:1750, wp:465, kwp:0.465, material:'Edelstahl, gebürstet', masse:'180 × 110 × 75 cm', img:'/assets/oneplus-gedeckt-garten.jpg' },
+  { id:'one', slug:'solartisch-sustable-one-aluminium', fullName:'Solartisch Sustable ONE Aluminium', price:1650, wp:465, kwp:0.465, material:'Aluminium, anthrazit', masse:'180 × 110 × 75 cm', img:'/assets/one-gedeckt-garten.jpg' },
+  { id:'mini', slug:'solartisch-sustable-mini', fullName:'Solartisch Sustable mini', price:1500, wp:315, kwp:0.315, material:'Aluminium, anthrazit', masse:'165 × 88 × 75 cm', img:'/assets/mini-terrasse.jpg' }
 ];
 function prod(id){ for (var i=0;i<PRODUCTS.length;i++){ if (PRODUCTS[i].id===id) return PRODUCTS[i]; } return PRODUCTS[0]; }
 var SPEC_YIELD = { nord:950, mitte:1020, sued:1100 };
@@ -41,7 +41,7 @@ function addToCart(id, qty){
   for (var i=0;i<c.length;i++){ if (c[i].id===id){ c[i].qty += qty; found=true; break; } }
   if (!found) c.push({ id:id, qty:qty });
   setCart(c);
-  showToast(qty===1 ? 'Zum Warenkorb hinzugefügt' : qty+'× zum Warenkorb hinzugefügt');
+  openCart();
 }
 
 /* ---------- Toast ---------- */
@@ -51,6 +51,79 @@ function showToast(text){
   clearTimeout(_toastTimer);
   root.innerHTML = '<div style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:2000; background:#111113; color:#ffffff; font-size:14.5px; font-weight:600; padding:14px 26px; border-radius:980px; box-shadow:0 8px 30px rgba(0,0,0,0.25); display:flex; align-items:center; gap:12px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5 11-11"></path></svg>'+esc(text)+'<a href="/warenkorb/" style="color:#ffffff; font-weight:700; text-decoration:underline;">Zum Warenkorb</a></div>';
   _toastTimer = setTimeout(function(){ root.innerHTML=''; }, 3500);
+}
+
+/* ---------- Warenkorb-Drawer (seitlich, alle Seiten) ---------- */
+var drawerEl=null, drawerBody=null, drawerOpen=false;
+function buildDrawer(){
+  if (drawerEl) return;
+  drawerEl = document.createElement('div');
+  drawerEl.className = 'cart-drawer';
+  drawerEl.innerHTML =
+    '<div class="cart-drawer-backdrop"></div>'+
+    '<aside class="cart-drawer-panel" role="dialog" aria-modal="true" aria-label="Warenkorb">'+
+      '<div class="cart-drawer-head"><span class="cart-drawer-title">Warenkorb</span>'+
+        '<button type="button" class="cart-drawer-x" aria-label="Warenkorb schließen">×</button></div>'+
+      '<div class="cart-drawer-body"></div>'+
+    '</aside>';
+  document.body.appendChild(drawerEl);
+  drawerBody = drawerEl.querySelector('.cart-drawer-body');
+  drawerEl.querySelector('.cart-drawer-backdrop').addEventListener('click', closeCart);
+  drawerEl.querySelector('.cart-drawer-x').addEventListener('click', closeCart);
+  document.addEventListener('keydown', function(e){ if (e.key==='Escape' && drawerOpen) closeCart(); });
+}
+function renderDrawer(){
+  if (!drawerEl) return;
+  var c = getCart();
+  if (cartCount(c) === 0){
+    drawerBody.innerHTML = '<div class="cart-drawer-empty"><div class="cd-empty-ic">🛒</div><p>Dein Warenkorb ist noch leer.</p>'+
+      '<button type="button" class="cd-btn cd-btn-ghost" data-cd-close>Weiter einkaufen</button></div>';
+  } else {
+    var rows='';
+    for (var i=0;i<c.length;i++){
+      var p = prod(c[i].id);
+      rows += '<div class="cd-row">'+
+        '<div class="cd-thumb"><img src="'+p.img+'" alt="'+esc(p.fullName)+'" loading="lazy"></div>'+
+        '<div class="cd-info"><div class="cd-name">'+esc(p.fullName)+'</div>'+
+          '<div class="cd-price">'+fmtEur(p.price)+'</div>'+
+          '<div class="cd-qty"><button type="button" data-cart-dec="'+p.id+'" aria-label="Menge verringern">−</button>'+
+            '<span>'+c[i].qty+'</span>'+
+            '<button type="button" data-cart-inc="'+p.id+'" aria-label="Menge erhöhen">+</button></div>'+
+        '</div>'+
+        '<div class="cd-side"><button type="button" class="cd-remove" data-cart-remove="'+p.id+'" aria-label="Entfernen">×</button>'+
+          '<div class="cd-line">'+fmtEur(c[i].qty*p.price)+'</div></div>'+
+      '</div>';
+    }
+    drawerBody.innerHTML =
+      '<div class="cd-items">'+rows+'</div>'+
+      '<div class="cd-foot">'+
+        '<div class="cd-sub"><span>Zwischensumme</span><span>'+fmtEur(cartTotal(c),2)+'</span></div>'+
+        '<div class="cd-ship">inkl. MwSt. · Versand kostenlos</div>'+
+        '<a href="/checkout/" class="cd-btn cd-btn-primary">Zur Kasse</a>'+
+        '<button type="button" class="cd-btn cd-btn-ghost" data-cd-close>Weiter einkaufen</button>'+
+      '</div>';
+  }
+  bindAll('[data-cart-inc]', function(el){ changeQty(el.getAttribute('data-cart-inc'), 1); });
+  bindAll('[data-cart-dec]', function(el){ changeQty(el.getAttribute('data-cart-dec'), -1); });
+  bindAll('[data-cart-remove]', function(el){ var id=el.getAttribute('data-cart-remove'); setCart(getCart().filter(function(x){return x.id!==id;})); refreshCarts(); });
+  bindAll('[data-cd-close]', function(){ closeCart(); });
+}
+function refreshCarts(){
+  if (document.getElementById('cart-app')) renderCart();
+  renderDrawer();
+}
+function openCart(){
+  buildDrawer();
+  renderDrawer();
+  drawerOpen = true;
+  document.body.classList.add('cart-open');
+  requestAnimationFrame(function(){ drawerEl.classList.add('open'); });
+}
+function closeCart(){
+  if (!drawerEl) return;
+  drawerOpen = false;
+  drawerEl.classList.remove('open');
+  document.body.classList.remove('cart-open');
 }
 
 /* ---------- Mobiles Menü ---------- */
@@ -164,15 +237,15 @@ function renderCart(){
   // bind
   bindAll('[data-cart-inc]', function(el){ changeQty(el.getAttribute('data-cart-inc'), 1); });
   bindAll('[data-cart-dec]', function(el){ changeQty(el.getAttribute('data-cart-dec'), -1); });
-  bindAll('[data-cart-remove]', function(el){ var id=el.getAttribute('data-cart-remove'); var c=getCart().filter(function(x){return x.id!==id;}); setCart(c); renderCart(); });
+  bindAll('[data-cart-remove]', function(el){ var id=el.getAttribute('data-cart-remove'); var c=getCart().filter(function(x){return x.id!==id;}); setCart(c); refreshCarts(); });
 }
 function changeQty(id, delta){
   var c = getCart();
   for (var i=0;i<c.length;i++){ if (c[i].id===id) c[i].qty += delta; }
   c = c.filter(function(x){ return x.qty>0; });
-  setCart(c); renderCart();
+  setCart(c); refreshCarts();
 }
-function bindAll(sel, fn){ var els=document.querySelectorAll(sel); for (var i=0;i<els.length;i++){ (function(el){ el.addEventListener('click', function(){ fn(el); }); })(els[i]); } }
+function bindAll(sel, fn, prevent){ var els=document.querySelectorAll(sel); for (var i=0;i<els.length;i++){ (function(el){ el.addEventListener('click', function(ev){ if (prevent) ev.preventDefault(); if (fn) fn(el, ev); }); })(els[i]); } }
 
 /* ---------- Checkout ---------- */
 function initCheckout(){
@@ -288,6 +361,7 @@ function init(){
   updateBadge();
   initMenu();
   initAddButtons();
+  bindAll('[data-cart-open]', function(el, ev){ openCart(); }, true);
   var page = document.body.getAttribute('data-page');
   if (page==='home') initCalc();
   if (page==='produkt'){ initProductQty(); initProductGallery(); }
