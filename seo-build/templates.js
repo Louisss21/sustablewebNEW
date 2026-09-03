@@ -157,7 +157,7 @@ function head(o){
   s += '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">\n';
   s += '<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">\n';
   if (o.maplibre) s += '<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">\n';
-  s += '<link rel="stylesheet" href="/styles.css?v=10">\n';
+  s += '<link rel="stylesheet" href="/styles.css?v=11">\n';
   var ld = o.jsonld || [];
   for (var i=0;i<ld.length;i++){
     s += '<script type="application/ld+json">' + JSON.stringify(ld[i]) + '</' + 'script>\n';
@@ -168,9 +168,9 @@ function head(o){
 function doc(o, bodyHtml){
   var scripts = '';
   if (o.maplibre) scripts += '<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></' + 'script>\n';
-  scripts += '<script src="/app.js?v=10" defer></' + 'script>\n';
-  scripts += '<script src="/effects.js?v=10" defer></' + 'script>\n';
-  scripts += '<script src="/guide.js?v=10" defer></' + 'script>\n';
+  scripts += '<script src="/app.js?v=11" defer></' + 'script>\n';
+  scripts += '<script src="/effects.js?v=11" defer></' + 'script>\n';
+  scripts += '<script src="/guide.js?v=11" defer></' + 'script>\n';
   return '<!DOCTYPE html>\n<html lang="de">\n<head>\n' + head(o) + '</head>\n'
     + '<body data-page="' + (o.page||'') + '" style="min-height:100vh; display:flex; flex-direction:column; background:#ffffff;">\n'
     + header(o.page) + '\n<main style="flex:1;">\n' + bodyHtml + '\n</main>\n'
